@@ -1,0 +1,43 @@
+SITE MAINTENANCE NOTES
+======================
+
+CONVENTIONS (FROZEN)
+- filenames: lowercase, no spaces, hyphens/underscores only.
+- slugs: yyyy-mm_shortname. filesystem only, never displayed.
+- displayed dates: mm.yy. ranges: mm-mm.yy.
+- undated material takes the archive date.
+- thumbnails: 250x100 jpeg, manual export.
+- full images: max 1600px longest edge, target under 500kb, jpeg.
+- audio: mp3, 128kbps max.
+- popups: 900x700, fixed, all entries.
+- ordering: newest first, except record (chronological, append bottom).
+- alt text: empty.
+- unavailable entries: no wrapper file, no link, state line on index.
+- titles: bare lowercase page name.
+- no css. no external dependencies. browser defaults throughout.
+
+ADDING AN IMAGE ENTRY (visual or photo)
+1. export full jpeg and thumb jpeg. name: yyyy-mm_slug_full.jpg /
+   yyyy-mm_slug_thumb.jpg. place in /[section]/img/.
+2. copy templates/popup-wrapper.html, fill fields, save as
+   /[section]/yyyy-mm_slug.html.
+3. copy image entry block from templates/entry-block.html, fill,
+   paste below insertion marker in [section].html.
+4. update the page header comment date. commit.
+
+ADDING A MUSIC ENTRY
+1. export mp3, name yyyy-mm_slug.mp3, place in /music/audio/.
+2. copy music entry block, fill, paste below insertion marker.
+3. update header comment date. commit.
+
+ADDING A WRITING ENTRY
+1. copy templates/writing-page.html, fill, save as
+   /writing/yyyy-mm_slug.html.
+2. copy index entry block, fill, paste below insertion marker
+   in writing.html.
+3. update header comment dates. commit.
+
+MIGRATION PATH (only if audio outgrows repo)
+- second github repo with pages enabled, audio only.
+- audio urls exist only in music.html entry blocks. find/replace
+  the path prefix. nothing else changes.
