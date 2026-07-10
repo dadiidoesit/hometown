@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Ties that Bind Us · Chapter 1</title>
+  <style>
+    /* 
+      A restrained typesetting style inspired by Project Gutenberg’s 
+      basic HTML editions — plain, readable, gently classical.
+      Extended with a sticky table of contents and a back‑to‑top link.
+    */
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      max-width: 36em;
+      margin: 0 auto;
+      padding: 3.5em 1.2em 2.5em;
+      font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #fdfdf8;
+      word-spacing: 0.05em;
+      letter-spacing: 0.01em;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Fixed/sticky navigation bar */
+    .toc-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fdfdf8;
+      border-bottom: 1px solid #c4b6a6;
+      padding: 0.6em 0 0.4em 0;
+      margin: -1.2em -1.2em 1.8em -1.2em; /* pull to body edges */
+      padding-left: 1.2em;
+      padding-right: 1.2em;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5em 1.2em;
+    }
+    .toc-nav a {
+      color: #4b3b2b;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7a48b;
+      padding-bottom: 0.1em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-nav a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+    .toc-nav .nav-label {
+      color: #6b5a4a;
+      font-style: italic;
+      margin-right: 0.2em;
+    }
+    .toc-nav .nav-spacer {
+      flex: 1;
+    }
+    .toc-nav .back-top-link {
+      font-size: 0.85rem;
+    }
+
+    /* Headings */
+    h2 {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+
+    p {
+      margin: 0 0 1.25em 0;
+      text-align: justify;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      orphans: 2;
+      widows: 2;
+    }
+
+    /* first paragraph after heading no indent */
+    h2 + p {
+      text-indent: 0;
+    }
+    /* following paragraphs indented */
+    p + p {
+      text-indent: 1.6em;
+    }
+
+    /* horizontal rules */
+    hr {
+      display: block;
+      border: none;
+      height: 1px;
+      background: #c4b6a6;
+      background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+      margin: 2.8em 0 2.5em 0;
+      width: 100%;
+      opacity: 0.65;
+    }
+
+    /* meta‑line (title / byline) */
+    .meta-line {
+      font-size: 0.95rem;
+      margin-top: 0.6em;
+      margin-bottom: 2.8em;
+      letter-spacing: 0.04em;
+      word-spacing: 0.12em;
+      color: #2c2c2c;
+      text-align: left;
+      line-height: 1.6;
+      font-style: normal;
+    }
+
+    /* back‑to‑top button / link */
+    .back-top-container {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .back-top-container a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-top-container a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* return link (original) */
+    .return-link {
+      text-align: center;
+      margin-top: 1.8em;
+      margin-bottom: 1.2em;
+    }
+    .return-link a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .return-link a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* small screen */
+    @media (max-width: 480px) {
+      body {
+        margin: 1.8em auto;
+        padding: 2.5em 1em 1.5em;
+        font-size: 0.95rem;
+      }
+      .toc-nav {
+        padding: 0.4em 0.8em;
+        margin: -1.2em -0.8em 1.5em -0.8em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .toc-nav .nav-spacer {
+        display: none;
+      }
+    }
+
+    /* top anchor */
+    #top {
+      position: absolute;
+      top: -3em;
+    }
+    body {
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<!-- invisible anchor for top -->
+<a id="top"></a>
+
+<!-- Sticky table of contents / navigation -->
+<nav class="toc-nav" aria-label="Contents">
+  <span class="nav-label">Contents</span>
+  <a href="#ch1">Chapter I</a>
+  <span class="nav-spacer"></span>
+  <a href="#top" class="back-top-link">↑ Back to top</a>
+</nav>
+
+<!-- Title / byline -->
+<p class="meta-line">
+  The Ties that Bind Us<br>
+  Chapter I<br>
+  (draft · unfinished)
+</p>
+
+<hr>
+
+<!-- CHAPTER HEADING -->
+<h2 id="ch1">Chapter I</h2>
+
+<!-- BODY TEXT – paragraphs as per the original text, split at natural breaks -->
+<p>
+  Pushing back down the years of built up self‑loathing he stumbled trying to get to his feet and fell to his knees. He took to crawling around searching for something in the mud. For a few moments he scrounged through the pools covering himself even more fully with the light brown sludge before finally finding what he was looking for... a particular corpse, naked but for a golden claw talisman around its neck. He traced the limbs back to the source and took the corpse under the shoulder, barely managing to pull it from the mud. Dragging it again, aided by the slick mud, he managed to pull it to the hole behind him. Propping it at the edge he kicked it in, falling backward and panting with exhaustion.
+</p>
+
+<p>
+  Rael woke to the smell of burning wood. Hickory most likely, he thought to himself as the heat from the fires all around caressed his side and tickled his fingertips. The grin on his face gave away his delight at finding himself prone amongst the burning wreckage of what had once been his home. If only his family could see him now, he continued, they'd know he was truly as lost as they had thought.
+</p>
+
+<p>
+  Even if he had the strength to stand up and leave his fiery grave he wouldn't have. For the first moment in what had been his life up to this point he felt truly content staring up at the support beams as ash and embers sprinkled down onto his chest and face. He no longer cared about the misfortunes he'd been subjected to. For the first time in years he didn't find himself preoccupied by what could have been done better, what tragedies could have been averted, what he should have done differently. Soon he would be free from his illusory form. His mind would be let loose in a sea of consciousness where none of the superficial concerns of daily life existed. Soon he would rejoin the ones he loved.
+</p>
+
+<p>
+  The main support beam began to crumble under the weight of the roof as the fire tore away at it. It would only be moments longer. Rael looked to his side and saw the skull—it must have fallen from his hand when he collapsed. The empty sockets stared back at him blankly. The jaw hung agape with its missing teeth like it was in the middle of delirious laughter, the lack of expression making it all the more ominous. Did he mean to harass him even now? How could the nameless fiend continue to egg on this poor man and keep him from his calling?
+</p>
+
+<p>
+  Rael could barely manage the strength enough to swat the skull away, and with some delight he watched as it rolled behind a flaming barrel just as another of the support beams came crashing down. He turned his eyes back to the ceiling; the support beam creaked and struggled under the weight of the roof as fire continued to consume it. Rael closed his eyes and waited for the inevitable.
+</p>
+
+<p>
+  Rael waited.
+</p>
+
+<p>
+  He waited and waited to ascend, to feel the fires curdling his skin from his muscles and his muscles cooked onto his bones, but nothing happened. The noise of crackling wood died away suddenly and the smell of burning hickory left his nostrils. The warmth of the fire was replaced with cool wetness.
+</p>
+
+<p>
+  Rael opened his eyes, sitting up hurriedly. He looked around, struggling to remember what had happened. He ran through the events previous to his waking up but found himself unable to form into words the images that quickly vanished from his mind's eye.
+</p>
+
+<p>
+  Somewhere—I was... that home, where is it... Rael knew that this was not where he was meant to be. His ratty clothes were heavy with mud and sludge and clung tightly to his wiry frame as he kicked his legs out from under himself. Looking around he saw that he lay in a pool of water amid other similar pools on the muddy landscape around.
+</p>
+
+<p>
+  To all appearances it must have rained recently, very recently as Rael found himself positively soaked to the bone. Far wetter than the puddle he rested in would have allowed. Standing to his feet and wiping his hands on the cleanest part of his tattered shirt he clutched his head, trying to remember what was happening to him. He could recall the skull—the same from the dream—sitting upon his bookshelf in the closet he called his study. He could remember the small shack on the outskirts of Veritas' estate, the pots of herbs lining the roof, Ina's room with its narrow cot and the dried flowers she'd hung from the rafters to make the place smell less of damp earth and old regret.
+</p>
+
+<p>
+  I remember... Rael. He said my name was Rael. It began to come back to him, slowly like the memories were bubbling up from the bottom of a pot over a low fire. A face flew past his mind's eye, kind and like his own... yet somehow not. His daughter, she'd said she was. Ina Attar had stood in the doorway of his little shack claiming to be his own flesh and blood daughter, no mother in sight. What was her excuse for that? He could come up with a few, easily, after all, what woman would go to bed with him? He couldn't recall her saying, though, and he found himself not caring whether she had, anyway.
+</p>
+
+<p>
+  He had said goodbye to her less than half a fortnight ago, before Ser Veritas had again dragged him off to the gods only knew where.
+</p>
+
+<p>
+  His eyes grew wide and he looked around wearily, seeing nothing but muddy ground for a few dozen meters. Veritas would have his hide if he saw him sleeping now of all times, the pompous swine. Selvor Veritas, the man who had made his life hell for as long as he could remember. Forcing him to do whatever he pleased whenever he pleased.
+</p>
+
+<p>
+  He must have tripped and passed out... Yes, that's what must have happened. It would be as good an excuse as any, he thought. He'd been plagued with nightmares for weeks now and couldn't sleep on his own, he must have collapsed. He remembered Ina telling him that if he didn't do something for his insomnia it would be the death of him. She'd even gathered herbs and made him a remedial tea, though he hadn't had time to drink it. Perhaps she'd been right; perhaps he should have found the time, as he did for his rituals. Not that Veritas would have let him. He'd made it clear when Rael woke and they first met that he would suffer no tomfoolery. Rael could still remember vividly how desperately he'd wanted to cut out Selvor's throat as he sat him down and went over how Rael, for all intents and purposes, belonged to him as a manservant, an errand boy.
+</p>
+
+<p>
+  Rael often wished, hoped and prayed that he would find the courage to leave—to take his daughter and run to the mountains or tell all the horrible things he'd seen Selvor do to the paladins and churches that patronized him. He'd have even been willing to live in the forests, hiding with the demons and chimeras and who knew what else... But it was no use; he didn't dare cross a man as powerful as Ser Selvor Veritas. Who was he to even entertain such a thought? If he had any spine at all he'd have killed him ages ago, it would be easy enough. Selvor had no fear of an aged and spineless amnesiac, so never ceased to deride him openly. Rael had the means twice over, but not half the nerve.
+</p>
+
+<p>
+  All these memories came rushing back to him in mere seconds, but to him, it felt like he was living the last year and a half all over again.
+</p>
+
+<p>
+  He'd have to get back soon; they were returning to Sevlor's home. Rael hoped Ina was alright. He'd been lucky to only dream this time. Next time would likely be a nightmare.
+</p>
+
+<p>
+  Sleep did not come easily to Rael Attar, and when it did come it came in thin sheets that blew off from covering him at the slightest provocation. This was the kind of sleep that left him feeling as though he'd been awake the whole time, and was merely lying still with his eyes closed to perform the ritual. All while his thoughts chased each other in circles like a dog after his own tail. A knocking at his door came as almost a relief.
+</p>
+
+<p>
+  Rael rose from his cot, bones groaning in protest of the sudden movement, and shuffled himself to the door. The errand‑boy standing there couldn't have been more than a rosy‑cheeked twelve years old. His bright green eyes darted nervously side to side as he delivered his message: Master Veritas wanted him. Something about the vermin he'd removed the night before had come up.
+</p>
+
+<p>
+  Of course. The torture victim. Rael had done his work and the arcane had revealed no bargain struck, no demonic pact. Simply incompetence, but Sevlor Veritas had made his decision and now Rael was expected to carry it out, all without having to give the order outright. The boy had been sent, Rael suspected, because his cover as a permanent pest exterminator was wearing thin with the more attentive staff. A child wouldn't think to question why the rat‑catcher was being summoned to discuss his work with the master of the house and not the headwaiter.
+</p>
+
+<p>
+  Rael thanked the boy and stepped outside. I should put something in my stomach, he thought. But he did not move back inside, nor slip into his modest little garden to snatch a tuber to munch upon as he began the trek to the manor. Rael got along well enough with the other workers when circumstance demanded it, but he kept his distance while at work; no one much liked the exterminator, for he always stank of death.
+</p>
+
+<p>
+  He was led quickly to Veritas' meeting room. And that was when his heart jumped to his throat.
+</p>
+
+<p>
+  Sevlor sat there in his casual business attire, a cup of something fragrant steaming before him. And beside him, smiling brightly, was Rael's own daughter. Rael's eyes bulged almost out of his skull as they darted across his daughter's face. A million thoughts ran through his mind, a thousand different scenarios involving Ina and Sevlor played out in his head. Each paranoid thought bloated to ridiculous proportions, fed off loathing for his master. Nothing was too low and cruel for him as far as Rael was concerned. Mind control, blackmail, extortion, or worse—seduction. That he would subject himself to this mental torture was nothing new. Each second passed felt like years to him. In a minute, he thought, he would rip out his own throat and bludgeon himself on a wall or table just to have it all end.
+</p>
+
+<p>
+  "Hi, daddy!" she said excitedly. "Guess what, I got a job here now!"
+</p>
+
+<p>
+  Snapping back to reality he forced an encouraging smile as he meekly stepped into the room, wringing his hands together like a racoon. "That's wonderful, dear. Just wonderful." He spoke through tightly clenched teeth and the false smile held for not a second longer than necessary to be believable. Then returned his usual frown. Selvor's eyes were fixed on him and he would not look up or meet the man's gaze. His fingernails dug into his palm til he felt the skin split and blood trailed to follow every crease seeking an escape to the earth.
+</p>
+
+<p>
+  Rael spoke with his head tilted down as though speaking to some very short person. "You wanted to see me, ser...?" His voice quivered to begin as he failed to mask his anger and shock, but the attempt was usually enough. "About the... report...?"
+</p>
+
+<p>
+  "Ah, yes." Selvor smiled as politely as if he was chatting with an old friend, idly playing with an emerald wing on his left hand middle finger. The make of the band was simple, but the gemstone was gorgeous and glisteningly polished. Selvor picked up a mug sat in front of him, and as the contents stirred their aroma reached Rael. The scent was quickly recognizable - Ina's blend, the one she'd made for his insomnia, with the nettle and forest chamomile that she called goblin's teeth.
+</p>
+
+<p>
+  "I'd forgotten; though, I trust that if there was anything terribly important, you'd already have told me. I was just telling Ms. Attar, here, how much respect and admiration we all have for you and the hard work you do for us all."
+</p>
+
+<p>
+  "Your daughter is quite talented," Selvor continued. "It is amazing how she grows these herbs all herself. In fact, she's so impressed me with her knowledge of horticulture and the apothecary craft that - finding myself in need of a physician after poor Mrs. Midgens passed - we began talking of her prospects and future. I offered to sponsor her education in exchange for her knowledge and skills, so that she might work here on the grounds and provide us all with some of her charm."
+</p>
+
+<p>
+  Ina smiled broadly. "I'll be able to live here close to you, daddy! The rooms are really very nice, and we'll be closer together. and- and I'll have a real garden instead of just some pots on the roof and..." She was silenced by the need to adopt a new breath after her excitement had scared away the last.
+</p>
+
+<p>
+  "I think it will be a delightful upgrade from that little shack out in the woods your father keeps you hidden away in. He's a little antisocial, isn't he?" Veritas turned to face Ina with a smile. "Of course, I wouldn't have hired her just because you're her father. As much as I rely on your services, it would be extremely improper of me to offer such favoritism to any of my staff. She came here looking for you, and I couldn't help but be curious about the herbs she'd brought with her. After a very passionate speech about the health benefits of good tea, I had to try some, you know. Oh, and I am quite glad I did! I thought, Selvor you should buy what she has off her right now! It will support your old friend Rael, and this handsome young woman's livelihood. But then as we spoke all these ideas kept coming to me; no one is using the western courtyard for anything important, for example; and so I offered her the space for her gardening, and we spoke more and more about all this wonderful naturopathy, and these tribal sciences she is so well versed in. When she told me she had no plans for proper education, well... I'll say it again, Miss Attar, letting a mind like yours go untrained is a waste unlike any other. No, no, I won't hear any of that, young woman - you deserve every ounce of praise. Does she not? Ahh, it was quite a happy coincidence, our meeting, wouldn't you agree, Rael?"
+</p>
+
+<p>
+  Rael stood there listening with a confused, blank expression about his countenance, but he felt none of the words being given to him. His body was a vessel with no one home, nothing driving the hush, no ambulatory desire to shock his ligaments and tendons into contraction and release. He scarcely breathed. His consciousness had been ejected from body, and it was consumed by a storm of rage and horror that became a black mess of anxiety, unwound and expanding outwards. Disconnecting from his body was the only way the coward in him could resign to play his role, the obedient servant. Otherwise he would have taken his ratting hook and driven it deep, deep, deep in through Sevlors mouth to see if he could create a second entrance to the man's throat.
+</p>
+
+<p>
+  Sevlor had a magic ring that let him detect the truth when spoken. He occasionally used it to tell when others were lying. But in Rael's experience, what he used it on most was himself. A way to tell if his own stories would hold under the examination of a truth spell. Judging by his cocksure demeanor, and that saccharine smile, Rael was certain that Sevlor was quite confident that the motivation he listed was legitimate. Even if it wasn't the only one.
+</p>
+
+<p>
+  "A... v‑very happy coincidence indeed, ser. It was very... kind of you to offer my daughter such hospitality. You have my thanks, and I hope that her skills will prove useful to you, ser." Rael wished he could choke on the words as they forced their way up his throat like bile. He suddenly began to feel claustrophobic, heat rushing to his head all at once making his vision draw in black at the edges. The world around him started to spin around and he could swear the walls were closing in on him. First his daughter, now the walls. Was this life nothing more than a grand conspiracy to drive him to complete madness? He glared out the corner of his eye at Veritas as he ran his fingers over the ring, finding himself at a loss for words. He wanted nothing more than to have some work to preoccupy himself with now, or else march a furious return to his pitiable home. Anything to take his mind off these new events.
+</p>
+
+<p>
+  Forcing a nervous cough to break the short silence he addressed Veritas in the same manner as when he first entered. "Hem, no, nothing important to report. A maid or something must have left some food lying around — an accident, I'm sure. I dealt with it before heading home in the evening" Rael lifted his gaze up to his master. "Did you require anything else, ser?"
+</p>
+
+<p>
+  Veritas smiled. "No, I don't believe there's anything of great importance right now. I'm sure everything I need to know will be in your report. As a matter of fact, barring any surprises, I shouldn't need your services for at least the next two days." He sipped more of the tea loudly, and was taking far more time and show of pleasure from it than was even possible. "It might be a good idea for you to show your daughter around the grounds a bit.... Then you might help her move in, tomorrow, and get settled in."
+</p>
+
+<p>
+  He chuckled a little. "I understand this comes as something of a surprise. It's all very sudden for all of us. You should both have some time to adjust; that is what I have decided is best." He continued to sip at the tea, smiling politely as Ina again extolled her thanks for the opportunity.
+</p>
+
+<p>
+  "I never realized you worked for someone so important," Ina said once they were arm in arm in departure. Rael's bony fingers clutched her elbow tightly and he tried to hurry her, but she had so much electricity in her step she did not notice his anxiety. "And he's so nice!" Like knives, dearbear; your words are so alike to knives!
+</p>
+
+<p>
+  Rael stopped, and he looked into her eyes imploringly. "Nice? Ina, I've told you not to come here many times. Why—" Rael stopped himself in the middle of forming his next complaint. He remembered what Sevlor had said, that Ina had gone looking for him. But he'd been in bed in their own home, he knew he had, and the boy who had come to his shack and risen him from sleep was the only disturbance today. His expression as he looked into his daughter's bright hazel and honey eyes shifted from a worried frown to a suspicious pursing of his lips into a tightly held line. He stepped back. There was an imperceptible barrier that separated them always, but this suspicion cut deeper. What was it? Could he have not been far off when he assumed it was some trickery of the mind? Selvor certainly hadn't lied, or his ring would have announced it. His head began to throb and he raised a hand to massage his temples. This was what always happened when he tried to think too hard or to remember too much. Perhaps he was mistaken; lately it had become increasingly more difficult for him to tell his waking life from his nightmares.
+</p>
+
+<p>
+  Seeing the worry and fear that she'd disappointed her only living relative, Rael relaxed his grip and scowl. "Never‑ you‑ mind, dear. Th‑ this is a happy occasion for you. Come, and I'll show you around."
+</p>
+
+<p>
+  Ina seemed like she wanted to say something, but then she thought better of it. "Ah... ok, father," she finally said. Then she followed Rael. Who could not hope but wonder what, exactly, was in the girl's mind.
+</p>
+
+<p>
+  As large as the ground were, he found himself unable to find much of note to show her because he spent scarcely much time here at all on the grounds proper. He took her to the things he thought she would be interested in: escorting her through the gardens and walking her through each courtyard, going down the halls so she could see the huge array of rooms, many unused. There were several extravagantly adorned ballrooms Selvor used for entertaining, one of these in particular stood out as the only room Rael thought he could have genuinely liked, were he not in the position he was. It was no different than the other halls except that the furnishings were more exotic, things Selvor had bought long ago. Lavish red carpets and gold colored tapestries adorned the walls in stark contrast to the plainer rooms found elsewhere. The centerpiece of the room was a gargantuan instrument to one side, sitting underneath an equally enormous portrait of its owner. It was clearly custom made; anyone who was not a musician would never have been able to tell it could be played at all given its construction. It appeared to be a strange combination of a harp and a manganel; a jutting bow with strings attached set to a manipulative lever and pulley‑like system. Seeing someone play it was magnificent, for it looked like it would require two or more men to operate it.
+</p>
+
+<p>
+  Selvor jokingly would claim he'd had it custom built by dwarves following drawings of his own design. Rael didn't know if it was true, but he guessed not. Selvor had no ear for music and no eye for beauty, let alone an eye for design.
+</p>
+
+<p>
+  One of the few dignities openly allowed to Rael was the distinction of being the only person able to play that monstrosity. Selvor had hired other musicians from the nearby city to try their luck coaxing some melody out of the monster, but to date only Rael had been successful and would sometimes be brought in for winter parties from his cold little shack to entertain the guests of Manor Veritas. It was one of the few things that gave him any sense of pride anymore; it certainly made him feel—at least somewhat—indispensable. Meaning to demonstrate how it worked to his daughter, hoping perhaps it would reach her where his words could not, he took a seat and began to pluck away at the strings and tilt the pedals controlling the levers with his legs. Immediately the hall was filled with sharply picked notes as his hands moved almost automatically across the strings. He began to lose himself in the soothing rhythm of the notes, the bright‑yet‑haunting sounds echoing back and forth against the walls. He played a composition he often played for Selvor's parties; a cheerful and plucky melody with his own moody droning on the strings underneath making the piece sound thoughtful rather than whimsical.
+</p>
+
+<p>
+  For a few minutes Rael was entirely lost in the music, forgetting about his daughter and his master. Behind his eyelids he saw images of things that confused him in a pleasant way. Visions of himself smiling, joking and being merry. Uncharacteristic expressions of joy drawn across his face and displayed in his mannerisms. Here he had a purpose of his own design. An unfamiliar clicking sounded, interrupting his musical tangent. The skull took a place in his daydream and his eyes flew open. Hands fell to his side and he saw a woman enter the room with a pleasant look on her face, but for a moment Rael couldn't place her, his mind still elsewhere.
+</p>
+
+<p>
+  "Medna. Yes, sorry, did I disturb you?" He stood from the instrument in a rush, then sank down to his knees to carefully shift the levers back in their original positions, crawling back and forth. Medna was, he recalled, Sevlor's personal chef. He'd had reason to speak to her more than the other people in his employ as occasionally their work was related. "This is my daughter, Ina. Sevlor has invited her to live here and start a garden in the western courtyard. I was just showing her around."
+</p>
+
+<p>
+  "Ah, so this is the young lady whose tea impressed the master so!" Medna smiled and greeted Ina. "Glad to have you on board, la. Your father speaks so well of you. And the Master is a very smart man. Very good at understanding people. I'm sure you'll do quite well for yourself here."
+</p>
+
+<p>
+  "Thank you!" Ina replied happily. "I'm lucky to have so many people looking out for me."
+</p>
+
+<p>
+  "That you are, dear," Medna agreed. "So, what kind of gardening do you do?"
+</p>
+
+<p>
+  At this point, the women started a healthily passionate conversation about herbs and the finer points of their use in food preparation. Rael stood off to the side as the two conversed, his own thoughts drifting to his work. Not the terrible things Sevlor made him do. His drawings and compositions, his components stored away carefully. He hadn't had time to finish preserving what was left of the man he'd interrogated the previous night; he'd been so tired that he couldn't even remember going home after peeling the skin back and leaving it to hang dry. There was no real rush, of course. Who was the smell likely to bother aside from him? Ah, gods; this headache that he'd been suffering for weeks was returning now again. Along with his various suspicions about what had gone wrong this morning. He wanted time to think now, not pretend to be a father.
+</p>
+
+<p>
+  "Ina, I‑ think I should head home. I don't feel quite well." He smiled wearily at the two. "Perhaps Medna would be so kind as to show you around more thoroughly than I am able? If it's alright with you. We can begin your moving in the morning."
+</p>
+
+<p>
+  Medna knew something was up, too, but seemed to be ok with not getting involved and allowing this cheery young woman to reprieve from her ghoulish father. She distracted Ina with more praise and led the confused and worried child out to another room. Rael was now alone. He held a smile as Medna ushered his daughter out, and as soon as he was alone it dropped from his face all at once. Moving quickly as he could without attracting unwanted attention, he made his way to the nearest exit into the open air, and then quickly back towards his own home.
+</p>
+
+<p>
+  It was minuscule in size compared to the mansion. Nothing to look at twice: a hut made of crudely cut logs and held together with some mud‑like paste that had become a burrow for many wasps over the years. There were only three rooms inside, one for himself and one for Ina, the third was where one walked in from outside. He looked up at the roof adorned with his own pots full of Ina's plants from their shared home, what she said had always been their shared home, and suddenly he couldn't help but feel sad knowing that the dying and dead things in them would soon be replenished and rejuvenated. Life would be restored and no more would death and decay provide a protective cloak over his slumping form.
+</p>
+
+<p>
+  He entered the rear chamber and drew the door shut behind him. Upon the wall above his narrow cot hung three instruments: a long‑necked lute of his own making, and two others, a lyre and a viola, both of which he had purchased in the nearby town. The lyre he lifted from its peg, laid it upon the cot, and stooped to draw from beneath the bed a candle and its holder. These he carried out of the house and into the wooded fringe of the property, where the land sloped toward the river and the forest stretched beyond the lord's jurisdiction, but the creatures of the forest neither obeyed or enforced the laws of upright folk.
+</p>
+
+<p>
+  He walked until he recognised two great trees that stood like sentinels over a moss‑grown stone, its surface netted with grasping roots cloying for soil. Going to it, he felt along the ground at its edge and found the hidden grip where an old root had once grown to hide the entrance. The stone rose for him with little resistance; the roots yielded as if in compliance. Rael lowered himself into the dark mouth of the passage, folding his long limbs in after him with the tight, creeping patience of a spider retreating into a crevice.
+</p>
+
+<p>
+  In the absolute blackness he groped along the wall until his fingers closed upon the flint, tinder, and scrap of paper he kept there. He struck the flint, knocked the candle over more than once in the fumbling dark, and at last coaxed a flame to the wick. The paper he pinched out and let fall. He descended the spiral stair, down into the ancient crypt, the flame shivering on its wick as the air grew cold. He did not shield it; he let it gutter and dance. The way was known to him—he followed the marks he had scratched into the stone, past the old tombs set into the walls. A rotted door, soft as wet felt, gave onto a further passage. There he set his candle in a rusted bracket and lit a second from the flame, then bore it onward. At the corridor's end he turned right and came to the low vault he called his study.
+</p>
+
+<p>
+  It had once held a family of bones, which he had long since removed. Now it held a worn desk, crude shelves sagging above it, and the scattered relics of his work. He set the lyre upon the desk and moved the remains of the night's labour—a task he had no stomach to finish—onto the coffin he used for storing his materials. Then he sat down, lit the candles before him, and took up the lyre. He played, murmuring an incantation without thought. As the notes rose, his gaze drifted upward to the skull on the shelf. The candlelight moved inside its hollows, stirring a false vitality in the bone. The sockets seemed to trace the motion of his hands. The few teeth that remained gave its grin a questioning cast, as though it strove to understand the music.
+</p>
+
+<p>
+  "Are you awake?" he asked, and did not cease playing.
+</p>
+
+<hr>
+
+<!-- Back to top link for this chapter -->
+<div class="back-top-container">
+  <a href="#top">↑ Back to top</a>
+</div>
+
+<!-- Original return link (kept for consistency) -->
+<div class="return-link">
+  <p><a href="../writing.html">back</a></p>
+</div>
+
+</body>
+</html>
