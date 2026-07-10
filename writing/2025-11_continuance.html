@@ -1,186 +1,241 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>continuance · a fragment</title>
-<style>
-  /* 
-    A restrained typesetting style inspired by Project Gutenberg’s 
-    basic HTML editions — plain, readable, gently classical.
-    No webfonts are imported; the design relies on the reader’s 
-    familiar serif stack and a calm, single‑column rhythm.
-  */
-  html {
-    font-size: 100%;
-    -webkit-text-size-adjust: 100%;
-  }
-  body {
-    max-width: 36em;          /* a comfortable measure for literary text */
-    margin: 2.5em auto;
-    padding: 0 1.2em;
-    font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
-    font-weight: 400;
-    line-height: 1.65;
-    color: #1a1a1a;
-    background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
-    word-spacing: 0.05em;
-    letter-spacing: 0.01em;
-    text-rendering: optimizeLegibility;
-  }
-
-  /* Headings are not used in the original template, but this ensures 
-     any future additions follow the same classical spirit. */
-  h1, h2, h3, h4, h5, h6 {
-    font-family: "Georgia", "Times New Roman", serif;
-    font-weight: 600;
-    line-height: 1.35;
-    margin-top: 2.2em;
-    margin-bottom: 0.6em;
-    letter-spacing: 0.02em;
-    color: #222;
-  }
-
-  p {
-    margin: 0 0 1.25em 0;
-    text-align: justify;      /* Gutenberg often uses justified text */
-    hyphens: auto;
-    -webkit-hyphens: auto;
-    -ms-hyphens: auto;
-    orphans: 2;
-    widows: 2;
-  }
-
-  /* The byline / meta line: delicate, spaced, slightly smaller */
-  .meta-line {
-    font-size: 0.95rem;
-    margin-top: 0.6em;
-    margin-bottom: 2.8em;
-    letter-spacing: 0.04em;
-    word-spacing: 0.12em;
-    color: #2c2c2c;
-    text-align: left;
-    line-height: 1.6;
-    font-style: normal;
-  }
-  .meta-line br {
-    display: block;
-    content: "";
-    margin-top: 0.25em;
-  }
-
-  /* 
-    Horizontal rules become delicate, classical dividers — 
-    reminiscent of a typographic fleuron or simple space, 
-    not a heavy browser default line.
-  */
-  hr {
-    display: block;
-    border: none;
-    height: 1px;
-    background: #9b8c7c;
-    background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
-    margin: 2.8em 0 2.5em 0;
-    width: 100%;
-    opacity: 0.65;
-  }
-
-  /* Optional subtle first‑paragraph treatment — Gutenberg occasionally 
-     uses a small lead‑in. We keep it very light and optional. */
-  .first-paragraph {
-    text-indent: 0;
-  }
-  /* Following paragraphs receive a classic indent, 
-     mimicking traditional book typography. */
-  p + p {
-    text-indent: 1.6em;
-  }
-
-  /* The closing navigation link — simple, centred, modest */
-  .return-link {
-    text-align: center;
-    margin-top: 2.4em;
-    margin-bottom: 1.8em;
-  }
-  .return-link a {
-    text-decoration: none;
-    color: #4b3b2b;
-    border-bottom: 1px dotted #b7a48b;
-    font-size: 0.95rem;
-    letter-spacing: 0.03em;
-    padding-bottom: 0.1em;
-    transition: color 0.2s ease, border-color 0.2s ease;
-  }
-  .return-link a:hover {
-    color: #1a1a1a;
-    border-bottom-color: #7b6e5a;
-  }
-
-  /* Very small screen refinement */
-  @media (max-width: 480px) {
-    body {
-      margin: 1.8em auto;
-      padding: 0 1em;
-      font-size: 0.95rem;
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><!-- Story Title · Chapter --></title>
+  <style>
+    /* 
+      A restrained typesetting style inspired by Project Gutenberg’s 
+      basic HTML editions — plain, readable, gently classical.
+      Extended with a sticky table of contents and a back‑to‑top link.
+    */
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
     }
+    body {
+      max-width: 36em;
+      margin: 0 auto;
+      padding: 3.5em 1.2em 2.5em;
+      font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #fdfdf8;
+      word-spacing: 0.05em;
+      letter-spacing: 0.01em;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Fixed/sticky navigation bar */
+    .toc-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fdfdf8;
+      border-bottom: 1px solid #c4b6a6;
+      padding: 0.6em 0 0.4em 0;
+      margin: -1.2em -1.2em 1.8em -1.2em;
+      padding-left: 1.2em;
+      padding-right: 1.2em;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5em 1.2em;
+    }
+    .toc-nav a {
+      color: #4b3b2b;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7a48b;
+      padding-bottom: 0.1em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-nav a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+    .toc-nav .nav-label {
+      color: #6b5a4a;
+      font-style: italic;
+      margin-right: 0.2em;
+    }
+    .toc-nav .nav-spacer {
+      flex: 1;
+    }
+    .toc-nav .back-top-link {
+      font-size: 0.85rem;
+    }
+
+    /* Headings */
+    h2 {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+
     p {
+      margin: 0 0 1.25em 0;
       text-align: justify;
       hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      orphans: 2;
+      widows: 2;
     }
-    hr {
-      margin: 2.2em 0 2em 0;
-    }
-  }
 
-  /* Preserve the original semantic structure; 
-     no extra classes required beyond what’s below. */
-</style>
+    /* first paragraph after heading no indent */
+    h2 + p {
+      text-indent: 0;
+    }
+    /* following paragraphs indented */
+    p + p {
+      text-indent: 1.6em;
+    }
+
+    /* horizontal rules */
+    hr {
+      display: block;
+      border: none;
+      height: 1px;
+      background: #c4b6a6;
+      background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+      margin: 2.8em 0 2.5em 0;
+      width: 100%;
+      opacity: 0.65;
+    }
+
+    /* meta‑line (title / byline) */
+    .meta-line {
+      font-size: 0.95rem;
+      margin-top: 0.6em;
+      margin-bottom: 2.8em;
+      letter-spacing: 0.04em;
+      word-spacing: 0.12em;
+      color: #2c2c2c;
+      text-align: left;
+      line-height: 1.6;
+      font-style: normal;
+    }
+
+    /* back‑to‑top button / link */
+    .back-top-container {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .back-top-container a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-top-container a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* return link (original) */
+    .return-link {
+      text-align: center;
+      margin-top: 1.8em;
+      margin-bottom: 1.2em;
+    }
+    .return-link a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .return-link a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* small screen */
+    @media (max-width: 480px) {
+      body {
+        margin: 1.8em auto;
+        padding: 2.5em 1em 1.5em;
+        font-size: 0.95rem;
+      }
+      .toc-nav {
+        padding: 0.4em 0.8em;
+        margin: -1.2em -0.8em 1.5em -0.8em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .toc-nav .nav-spacer {
+        display: none;
+      }
+    }
+
+    /* top anchor */
+    #top {
+      position: absolute;
+      top: -3em;
+    }
+    body {
+      position: relative;
+    }
+  </style>
 </head>
 <body>
 
-<!-- The title and meta note, styled as a simple classical byline -->
+<!-- invisible anchor for top -->
+<a id="top"></a>
+
+<!-- Sticky table of contents / navigation -->
+<nav class="toc-nav" aria-label="Contents">
+  <span class="nav-label">Contents</span>
+  <a href="#ch1">Chapter I</a>
+  <span class="nav-spacer"></span>
+  <a href="#top" class="back-top-link">↑ Back to top</a>
+</nav>
+
+<!-- Title / byline -->
 <p class="meta-line">
-  continuance<br>
-  11.25<br>
-  unfinished. posted as‑is.
+  <!-- Story Title --><br>
+  <!-- Chapter --><br>
+  <!-- (draft · unfinished) -->
 </p>
 
 <hr>
 
-<!-- 
-  Body text: classic paragraphs with the first one set without indent,
-  then subsequent paragraphs use a traditional indent via the sibling rule.
-  This mirrors the understated reading rhythm of many Gutenberg texts.
--->
-<p class="first-paragraph">
-  [body text begins here. paragraphs separated by p tags. no other formatting.]
-</p>
+<!-- CHAPTER HEADING -->
+<h2 id="ch1">Chapter I</h2>
 
+<!-- BODY TEXT – paragraphs go here -->
 <p>
-  [second paragraph.]
+  <!-- Your story text goes here. -->
 </p>
-
-<!-- Additional paragraphs can be inserted here. 
-     Each new <p> will automatically carry a slight indent, 
-     evoking the look of a printed page. For example: -->
-<!--
-<p>
-  [a third paragraph, with classic indent.]
-</p>
--->
 
 <hr>
 
+<!-- Back to top link for this chapter -->
+<div class="back-top-container">
+  <a href="#top">↑ Back to top</a>
+</div>
+
+<!-- Original return link (kept for consistency) -->
 <div class="return-link">
   <p><a href="../writing.html">back</a></p>
 </div>
 
-<!-- 
-  The template remains intentionally light and semantic.
-  It uses no unnecessary classes beyond the meta line and return link,
-  keeping the markup close to your original vision while adopting
-  a classical, Gutenberg‑inspired visual cadence.
--->
 </body>
 </html>
-```
