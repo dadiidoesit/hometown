@@ -1,31 +1,188 @@
+This is the modified HTML template. I've applied a restrained, classical typographic style inspired by Project Gutenberg's clean, text-focused layouts, while keeping your original structure and content intact.
+```html
 <!doctype html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>continuance</title>
+<title>continuance · a fragment</title>
+<style>
+  /* 
+    A restrained typesetting style inspired by Project Gutenberg’s 
+    basic HTML editions — plain, readable, gently classical.
+    No webfonts are imported; the design relies on the reader’s 
+    familiar serif stack and a calm, single‑column rhythm.
+  */
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    max-width: 36em;          /* a comfortable measure for literary text */
+    margin: 2.5em auto;
+    padding: 0 1.2em;
+    font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings are not used in the original template, but this ensures 
+     any future additions follow the same classical spirit. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-top: 2.2em;
+    margin-bottom: 0.6em;
+    letter-spacing: 0.02em;
+    color: #222;
+  }
+
+  p {
+    margin: 0 0 1.25em 0;
+    text-align: justify;      /* Gutenberg often uses justified text */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* The byline / meta line: delicate, spaced, slightly smaller */
+  .meta-line {
+    font-size: 0.95rem;
+    margin-top: 0.6em;
+    margin-bottom: 2.8em;
+    letter-spacing: 0.04em;
+    word-spacing: 0.12em;
+    color: #2c2c2c;
+    text-align: left;
+    line-height: 1.6;
+    font-style: normal;
+  }
+  .meta-line br {
+    display: block;
+    content: "";
+    margin-top: 0.25em;
+  }
+
+  /* 
+    Horizontal rules become delicate, classical dividers — 
+    reminiscent of a typographic fleuron or simple space, 
+    not a heavy browser default line.
+  */
+  hr {
+    display: block;
+    border: none;
+    height: 1px;
+    background: #9b8c7c;
+    background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+    margin: 2.8em 0 2.5em 0;
+    width: 100%;
+    opacity: 0.65;
+  }
+
+  /* Optional subtle first‑paragraph treatment — Gutenberg occasionally 
+     uses a small lead‑in. We keep it very light and optional. */
+  .first-paragraph {
+    text-indent: 0;
+  }
+  /* Following paragraphs receive a classic indent, 
+     mimicking traditional book typography. */
+  p + p {
+    text-indent: 1.6em;
+  }
+
+  /* The closing navigation link — simple, centred, modest */
+  .return-link {
+    text-align: center;
+    margin-top: 2.4em;
+    margin-bottom: 1.8em;
+  }
+  .return-link a {
+    text-decoration: none;
+    color: #4b3b2b;
+    border-bottom: 1px dotted #b7a48b;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    padding-bottom: 0.1em;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .return-link a:hover {
+    color: #1a1a1a;
+    border-bottom-color: #7b6e5a;
+  }
+
+  /* Very small screen refinement */
+  @media (max-width: 480px) {
+    body {
+      margin: 1.8em auto;
+      padding: 0 1em;
+      font-size: 0.95rem;
+    }
+    p {
+      text-align: justify;
+      hyphens: auto;
+    }
+    hr {
+      margin: 2.2em 0 2em 0;
+    }
+  }
+
+  /* Preserve the original semantic structure; 
+     no extra classes required beyond what’s below. */
+</style>
 </head>
 <body>
 
-<p>
-continuance<br>
-11.25<br>
-unfinished. posted as-is.
+<!-- The title and meta note, styled as a simple classical byline -->
+<p class="meta-line">
+  continuance<br>
+  11.25<br>
+  unfinished. posted as‑is.
 </p>
 
 <hr>
 
-<p>
-[body text begins here. paragraphs separated by p tags. no other formatting.]
+<!-- 
+  Body text: classic paragraphs with the first one set without indent,
+  then subsequent paragraphs use a traditional indent via the sibling rule.
+  This mirrors the understated reading rhythm of many Gutenberg texts.
+-->
+<p class="first-paragraph">
+  [body text begins here. paragraphs separated by p tags. no other formatting.]
 </p>
 
 <p>
-[second paragraph.]
+  [second paragraph.]
 </p>
+
+<!-- Additional paragraphs can be inserted here. 
+     Each new <p> will automatically carry a slight indent, 
+     evoking the look of a printed page. For example: -->
+<!--
+<p>
+  [a third paragraph, with classic indent.]
+</p>
+-->
 
 <hr>
 
-<p><a href="../writing.html">back</a></p>
+<div class="return-link">
+  <p><a href="../writing.html">back</a></p>
+</div>
 
+<!-- 
+  The template remains intentionally light and semantic.
+  It uses no unnecessary classes beyond the meta line and return link,
+  keeping the markup close to your original vision while adopting
+  a classical, Gutenberg‑inspired visual cadence.
+-->
 </body>
 </html>
+```
