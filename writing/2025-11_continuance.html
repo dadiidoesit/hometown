@@ -1,6 +1,36 @@
 <!doctype html>
 <html lang="en">
 <head>
+<<<<<<< HEAD
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><!-- Story Title · Chapter --></title>
+  <style>
+    /* 
+      A restrained typesetting style inspired by Project Gutenberg's 
+      basic HTML editions — plain, readable, gently classical.
+      Extended with a sticky table of contents and a back‑to‑top link.
+    */
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      max-width: 36em;          /* a comfortable measure for literary text */
+      margin: 2.5em auto;
+      padding: 0 1.2em;
+      font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
+      word-spacing: 0.05em;
+      letter-spacing: 0.01em;
+      text-rendering: optimizeLegibility;
+      position: relative;
+    }
+=======
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><!-- Story Title · Chapter --></title>
@@ -28,7 +58,48 @@
       letter-spacing: 0.01em;
       text-rendering: optimizeLegibility;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* Fixed/sticky navigation bar */
+    .toc-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fdfdf8;
+      border-bottom: 1px solid #c4b6a6;
+      padding: 0.6em 1.2em 0.4em 1.2em;
+      margin: -2.5em -1.2em 1.8em -1.2em;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5em 1.2em;
+    }
+    .toc-nav a {
+      color: #4b3b2b;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7a48b;
+      padding-bottom: 0.1em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-nav a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+    .toc-nav .nav-label {
+      color: #6b5a4a;
+      font-style: italic;
+      margin-right: 0.2em;
+    }
+    .toc-nav .nav-spacer {
+      flex: 1;
+    }
+    .toc-nav .back-top-link {
+      font-size: 0.85rem;
+    }
+=======
     /* Fixed/sticky navigation bar */
     .toc-nav {
       position: sticky;
@@ -69,7 +140,20 @@
     .toc-nav .back-top-link {
       font-size: 0.85rem;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+=======
     /* Headings */
     h2 {
       font-family: "Georgia", "Times New Roman", serif;
@@ -80,7 +164,15 @@
       letter-spacing: 0.02em;
       color: #222;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* Override heading margins for chapter headings to match Gutenberg style */
+    h2 {
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+    }
+=======
     p {
       margin: 0 0 1.25em 0;
       text-align: justify;
@@ -90,7 +182,19 @@
       orphans: 2;
       widows: 2;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    p {
+      margin: 0 0 1.25em 0;
+      text-align: justify;      /* Gutenberg often uses justified text */
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      orphans: 2;
+      widows: 2;
+    }
+=======
     /* first paragraph after heading no indent */
     h2 + p {
       text-indent: 0;
@@ -99,7 +203,19 @@
     p + p {
       text-indent: 1.6em;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* first paragraph after heading no indent */
+    h2 + p,
+    .first-paragraph {
+      text-indent: 0;
+    }
+    /* following paragraphs indented */
+    p + p {
+      text-indent: 1.6em;
+    }
+=======
     /* horizontal rules */
     hr {
       display: block;
@@ -111,7 +227,21 @@
       width: 100%;
       opacity: 0.65;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* horizontal rules */
+    hr {
+      display: block;
+      border: none;
+      height: 1px;
+      background: #9b8c7c;
+      background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+      margin: 2.8em 0 2.5em 0;
+      width: 100%;
+      opacity: 0.65;
+    }
+=======
     /* meta‑line (title / byline) */
     .meta-line {
       font-size: 0.95rem;
@@ -124,13 +254,67 @@
       line-height: 1.6;
       font-style: normal;
     }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
+<<<<<<< HEAD
+    /* meta‑line (title / byline) */
+    .meta-line {
+=======
     /* back‑to‑top button / link */
     .back-top-container {
       text-align: center;
       margin-top: 2.4em;
       margin-bottom: 1.8em;
     }
+    .back-top-container a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
+      font-size: 0.95rem;
+<<<<<<< HEAD
+      margin-top: 0.6em;
+      margin-bottom: 2.8em;
+      letter-spacing: 0.04em;
+      word-spacing: 0.12em;
+      color: #2c2c2c;
+      text-align: left;
+      line-height: 1.6;
+      font-style: normal;
+=======
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
+    }
+<<<<<<< HEAD
+    .meta-line br {
+      display: block;
+      content: "";
+      margin-top: 0.25em;
+=======
+    .back-top-container a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
+    }
+<<<<<<< HEAD
+
+    /* back‑to‑top container */
+    .back-top-container {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+=======
+
+    /* return link (original) */
+    .return-link {
+      text-align: center;
+      margin-top: 1.8em;
+      margin-bottom: 1.2em;
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
+    }
+<<<<<<< HEAD
     .back-top-container a {
       text-decoration: none;
       color: #4b3b2b;
@@ -144,12 +328,28 @@
       color: #1a1a1a;
       border-bottom-color: #7b6e5a;
     }
+=======
+    .return-link a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .return-link a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 
-    /* return link (original) */
+<<<<<<< HEAD
+    /* return link */
     .return-link {
       text-align: center;
-      margin-top: 1.8em;
-      margin-bottom: 1.2em;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
     }
     .return-link a {
       text-decoration: none;
@@ -165,6 +365,36 @@
       border-bottom-color: #7b6e5a;
     }
 
+    /* small screen */
+    @media (max-width: 480px) {
+      body {
+        margin: 1.8em auto;
+        padding: 0 1em;
+        font-size: 0.95rem;
+      }
+      .toc-nav {
+        padding: 0.4em 0.8em;
+        margin: -1.8em -1em 1.5em -1em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .toc-nav .nav-spacer {
+        display: none;
+      }
+      hr {
+        margin: 2.2em 0 2em 0;
+      }
+    }
+
+    /* top anchor */
+    #top {
+      position: absolute;
+      top: -3em;
+    }
+  </style>
+=======
     /* small screen */
     @media (max-width: 480px) {
       body {
@@ -194,6 +424,7 @@
       position: relative;
     }
   </style>
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 </head>
 <body>
 
@@ -210,32 +441,78 @@
 
 <!-- Title / byline -->
 <p class="meta-line">
+<<<<<<< HEAD
+  <!-- Story Title --><br>
+  <!-- Chapter or date --><br>
+  <!-- status note (optional) -->
+=======
   <!-- Story Title --><br>
   <!-- Chapter --><br>
   <!-- (draft · unfinished) -->
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 </p>
 
 <hr>
 
+<<<<<<< HEAD
+<!-- CHAPTER HEADING -->
+<h2 id="ch1">Chapter I</h2>
+
+<!-- 
+  Body text: classic paragraphs with the first one set without indent,
+  then subsequent paragraphs use a traditional indent via the sibling rule.
+  Use .first-paragraph if you want a no-indent first paragraph 
+  without a preceding heading.
+-->
+=======
 <!-- CHAPTER HEADING -->
 <h2 id="ch1">Chapter I</h2>
 
 <!-- BODY TEXT – paragraphs go here -->
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 <p>
+<<<<<<< HEAD
+  <!-- Your story text begins here. -->
+=======
   <!-- Your story text goes here. -->
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 </p>
 
+<<<<<<< HEAD
+<p>
+  <!-- second paragraph, automatically indented -->
+</p>
+
+<!-- Additional paragraphs can be inserted here.
+     Each new <p> will automatically carry a slight indent,
+     evoking the look of a printed page. -->
+
+=======
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 <hr>
 
+<<<<<<< HEAD
+<!-- Back to top link -->
+<div class="back-top-container">
+  <a href="#top">↑ Back to top</a>
+</div>
+
+<!-- Return link -->
+=======
 <!-- Back to top link for this chapter -->
 <div class="back-top-container">
   <a href="#top">↑ Back to top</a>
 </div>
 
 <!-- Original return link (kept for consistency) -->
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
 <div class="return-link">
   <p><a href="../writing.html">back</a></p>
 </div>
 
 </body>
 </html>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 25ba0e82ee82d2988fea52815dbb4eb3d4c79b09
