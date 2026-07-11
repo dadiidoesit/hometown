@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>little asai · a fragment</title>
+  <style>
+    /* 
+      A restrained typesetting style inspired by Project Gutenberg's 
+      basic HTML editions — plain, readable, gently classical.
+      Extended with a sticky table of contents and a back‑to‑top link.
+    */
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      max-width: 36em;          /* a comfortable measure for literary text */
+      margin: 2.5em auto;
+      padding: 0 1.2em;
+      font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
+      word-spacing: 0.05em;
+      letter-spacing: 0.01em;
+      text-rendering: optimizeLegibility;
+      position: relative;
+    }
+
+    /* Fixed/sticky navigation bar */
+    .toc-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fdfdf8;
+      border-bottom: 1px solid #c4b6a6;
+      padding: 0.6em 1.2em 0.4em 1.2em;
+      margin: -2.5em -1.2em 1.8em -1.2em;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5em 1.2em;
+    }
+    .toc-nav a {
+      color: #4b3b2b;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7a48b;
+      padding-bottom: 0.1em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-nav a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+    .toc-nav .nav-label {
+      color: #6b5a4a;
+      font-style: italic;
+      margin-right: 0.2em;
+    }
+    .toc-nav .nav-spacer {
+      flex: 1;
+    }
+    .toc-nav .back-top-link {
+      font-size: 0.85rem;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+
+    /* Override heading margins for chapter headings to match Gutenberg style */
+    h2 {
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+    }
+
+    p {
+      margin: 0 0 1.25em 0;
+      text-align: justify;      /* Gutenberg often uses justified text */
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      orphans: 2;
+      widows: 2;
+    }
+
+    /* first paragraph after heading no indent */
+    h2 + p,
+    .first-paragraph {
+      text-indent: 0;
+    }
+    /* following paragraphs indented */
+    p + p {
+      text-indent: 1.6em;
+    }
+
+    /* horizontal rules */
+    hr {
+      display: block;
+      border: none;
+      height: 1px;
+      background: #9b8c7c;
+      background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+      margin: 2.8em 0 2.5em 0;
+      width: 100%;
+      opacity: 0.65;
+    }
+
+    /* meta‑line (title / byline) */
+    .meta-line {
+      font-size: 0.95rem;
+      margin-top: 0.6em;
+      margin-bottom: 2.8em;
+      letter-spacing: 0.04em;
+      word-spacing: 0.12em;
+      color: #2c2c2c;
+      text-align: left;
+      line-height: 1.6;
+      font-style: normal;
+    }
+    .meta-line br {
+      display: block;
+      content: "";
+      margin-top: 0.25em;
+    }
+
+    /* back‑to‑top container */
+    .back-top-container {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .back-top-container a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-top-container a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* return link */
+    .return-link {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .return-link a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .return-link a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* small screen */
+    @media (max-width: 480px) {
+      body {
+        margin: 1.8em auto;
+        padding: 0 1em;
+        font-size: 0.95rem;
+      }
+      .toc-nav {
+        padding: 0.4em 0.8em;
+        margin: -1.8em -1em 1.5em -1em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .toc-nav .nav-spacer {
+        display: none;
+      }
+      hr {
+        margin: 2.2em 0 2em 0;
+      }
+    }
+
+    /* top anchor */
+    #top {
+      position: absolute;
+      top: -3em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- invisible anchor for top -->
+<a id="top"></a>
+
+<!-- Sticky table of contents / navigation -->
+<nav class="toc-nav" aria-label="Contents">
+  <span class="nav-label">Contents</span>
+  <a href="#ch1">1</a>
+  <a href="#ch2">2</a>
+  <a href="#ch3">3</a>
+  <a href="#ch4">4</a>
+  <a href="#ch5">5</a>
+  <a href="#ch6">6</a>
+  <a href="#ch7">7</a>
+  <a href="#ch8">8</a>
+  <a href="#ch9">9</a>
+  <a href="#ch10">10</a>
+  <span class="nav-spacer"></span>
+  <a href="#top" class="back-top-link">↑ Back to top</a>
+</nav>
+
+<!-- Title / byline -->
+<p class="meta-line">
+  little asai<br>
+  a fragment
+</p>
+
+<hr>
+
+<!-- CHAPTER 1 -->
+<h2 id="ch1">1</h2>
+
+<p>
+    The land opened up in all directions below the plateau of metal and sheet rock that jutted up from the ground like a hangnail. The mottled brown and black scars cut so deeply into the soil that they'd remain visible for another 20, 40, or 100 years to pass. The rotted stumps of trees that had tried to grow back up by stealing what few nutrients were left in this place made clumsy circles marking the periphery of whatever had occurred here, and though some had managed to make a future for their seedlings and dig their roots deep none managed to defy nature. A single law ruled the land here: life ended here for all things, and nothing new would be born.
+</p>
+<p>
+    An osprey, pitch black in a way totally uncommon to it's kind - from beak to claw, glided down from on high where the clouds swirled around in what little atmosphere was left on the once beautiful blue marble many creatures still called home. It swirled like a ribbon in the wind, wings tucking and spreading, curling in on themselves like a dancer falling through the sky. The show continued until the creature was near enough to the ground that not slowing their descent would lead it to an untimely death and then, like magic, wings spread out and took on a positively massive span to parachute it's body safely.
+</p>
+<p>
+    Landing onto a hanging bit of rusted metal halfway supported in the ground by some sort of concrete bolder buried atop of it, the creature turned its head southward and began to change. Furry ears shot out in either direction underneath the plume of feathers on its head, feathers sucking back inward as fur burst out in its place. The creature grew taller, stouter, it's stance more relaxed but dominant like a beast who had no predators and did not fear enemies in the open air. Bear claws hanging limp at its sides like swollen but lifeless tentacles swaying lightly in the breeze; a huge snout hanging from the tip-top of the creature's head with no jaw to hold it closed, a permanent foul grimace affixed there to ward off any onlookers. The tattered remains of the back end of the bear-skin cloak fluttered in the wind and provided little warmth to the young woman who bore it, but it was still more comfort than she was normally accustomed.
+</p>
+<p>
+    Asai spat a mouthful of shrew bones from the side of her cheek, hacking up a bit of fur and wiping her lips on the bare skin of her forearm. She wondered how she looked standing up here, posing for no one in the way that the people did in the magazines she once worshipped and studied, relics of an old world and the only escape she'd ever really known.
+</p>
+<p>
+    Her face was dark and lean now, no longer the somewhat pudgy awkward thing limping around like a bloated monkey without a home. She was lithe but not sinewy, arms hanging lazily under the arms of her bear coat and swelling with muscle that made them look like thick branches covered in flesh-bark. Her brown eyes reflected no light underneath the hood of her cloak and all the better, the sun was out in full force in the peak of afternoon and whenever an amorphous bit of vapor shifted just right it would shine down like laser beams and mark spots out on the earth. She was still not pretty, not in the way she wished she was. Her teeth gapped in the front and her eyes were too small and her cheeks to wide and round like the rest of her head. Her hair was too matted and knotty and curled too much, her forehead was too small just like her breasts and her bottom and her thighs were too big like her hips. Her toes curled into the dirt and she coughed as she went down the list.
+</p>
+<p>
+    She curled a finger up into her mouth and then did the same with her thumb, halfway morphing her jaw to something serpentine to accommodate the size of her rough hands and strong fingers, prying remnants of her snack from her back teeth.
+</p>
+<p>
+    "I can't stand birds." She muttered to herself as she stepped slowly to the very edge of her metal perch and hunched down into a squat, wondering why she'd not just waited to digest her meal before shifting back. She placed a hand onto the dull brown metal and began to rub it in circles, wondering what it had once been. A bit of a plane, perhaps - or maybe a flattened car or the side of a van? She half-remembered her friends' little makeshift cottage on the plains where they played house together and quickly forced the memory down into the pit of her stomach. It could keep the shrew company while it turned to mush.
+</p>
+<p>
+    The more she rubbed the smoother it became, dirt and grime that hadn't really set in place and claimed a home moving rather willingly. A few dozen smears and a hefty glob of saliva hacked up from the back of her throat to aid the idle task of polishing the ground underneath her bare feet, toes curled up against it, and soon enough it was just almost reflective. Enough so at least to give an idea of what was looking back. She pulled her hood back, messy plaited hair hanging around her ears, neck and some over her brow, and for a moment she felt a sense of familiarity to the blurry figure staring up at her from the shadow below. She reached up and ran her finger over the scar of what used to be her nose, followed it up over her right cheek where the shrapnel had left little craters in her face.
+</p>
+<p>
+    She'd never been pretty, she knew that even before people began to tell her so as she grew older, but now she was absolutely positive she was somewhere between hideous and just unsightly. The funny thing was she didn't mind it like she used to now when the end of all things was so near she could taste death on her tongue whenever she opened her mouth. Even in the twilight hours when she thought about what her friends would say if they saw her now, their imagined words didn't have a comforting effect. She was beyond comfort now - all she needed was to cling to sanity.
+</p>
+<p>
+    She felt the sudden urge to cry as she fingered at the torn flesh around her nostril, eyes burning like she'd stepped into something noxious and it was trying seep into her flesh, but she didn't shed any tears. <i>'You look cute,'</i> that's what Yara would say, she thought. <i>'Hair's a mess, but I can fix that.'</i>
+</p>
+<p>
+    She paused and pushed dirt back over the muddy reflection; would Yara have smiled cutely and turned her head at her? Or would she have pushed her back and called her a name, told her to <i>'Run off, little monkey'</i> like her brother so often did. She was so certain she'd compliment the bear corpse she carried with her, absolutely positive she'd be somewhat envious of the fearful impression it relayed. It was the only reason she slew the creature, really; why she'd taken a sharp rock and bled it out into the dirt, sat and watched the life leak out of it and the flies gather in ritual to take their own sick nourishment. She would have worn it still wet if she had the stomach for it but that was a bit much. <i>Yara would do it,</i> she'd told herself. But she still hung it out to dry in the sun anyway<i>. Maybe next time.</i>
+</p>
+<p>
+    A cold wind shot through the gap between her legs and chilled her enough that she forgot her reverie, reaching for the arms of the bear and hugging it around her body as she made herself small, a shard of the fragile thing she was back then. Staring out into the distance admiring the death, the decay, the complete lack of anything resembled life. Looking out in true gleeful admiration. Yara's vision was as majestic as she'd described it to her on Saif's deathbed underneath the steadily dying willow that would mark his grave for a time. She wasn't sure whether this was exactly what she wanted to create, the hellscape that had haunted her dreams for so long that it finally corroded her poor heart to a point that no healing touch could mend it... but it was an impressive spectacle nonetheless.
+</p>
+<p>
+    The government had called it the <i>Zero Event</i> - at least for as long as people collected together enough to have anything resembling a government. A phenomenon so powerful it defied conventional explanation of anything mutant that had been observed since The Wishmaker came to Earth. A energetic cataclysm that penetrated reality itself and <i>willed</i> it to not just die, but to stay in a perpetual state of dying.
+</p>
+<p>
+    A reverse <i>phoenix</i> was what Yara told her it would be; dying over and over but never growing back - not just the plants, the animals, the air; not even just the planet. The very fabric of reality, or at least one stitch of the quilt, had been caught in a perpetual loop of death just to comfort the broken mind of a girl who was powerful enough to be its mistress.
+</p>
+
+<hr>
+
+<!-- CHAPTER 2 -->
+<h2 id="ch2">2</h2>
+
+<p>
+    Saif watched as his sister sashayed around the corner of the abandoned building, her fingers trailing the crisscrossed ivy overgrowth that consumed the outer shell of what had become the aliens breeding ground, turning the vibrant plant life into ash as she walked by. His ears burned with silent sadness as he listened to the cheerful tune she was humming - she was always in a good mood when she got to kill things. It made the hairs on his body stand on end and his stomach felt like it was doing cartwheels around his intestines, but he let her have her fun.
+</p>
+<p>
+    Asai was wearing her new headband and constantly pinched and pulled at it trying to ease the pressure it was putting on her skull. It made it hard to focus on anything, least of all using her power, but she thought it looked <i>cool.</i> Style over practicality. She strolled ahead with determination, steeled for more hard work to come. Yara was, as usual, the main assault force for the party but she knew if push came to shove she'd need to get in and get bloody as well. She wasn't even nearly so bloodthirsty though and didn't relish in the thought. She was a soldier and if it came down to it she'd do what she had to do to survive.
+</p>
+<p>
+    Saif grabbed a hold of her arm and boxed her away from the path she was on; Asai immediately tries to yelp but the young man had a hand over her mouth and pushed her hard against the wall. For a moment his mind bursts on reflex and both of them are gifted a slow motion replay of the last time they were in this position... Saif on top of her, pushing her clothes down or off as his hands kept awkwardly grabbing at her body the way he grabbed at Yara but without any of the tact and skill. It was an adventure to unknown territory and the unfamiliarity scared him. She felt her heart stop for a moment as she looked down at herself in the third person, watching the look of complete fear as past-Asai realized what was about to happen and instead of striking back against her assailant she just... lay there. Her body tensing up and going limp as his strong tan hands pushed between her legs and touched her against her will.
+</p>
+<p>
+    This time at least he didn't have anything sexual on his mind when he pinned her down. He snarled at her until she stopped flailing, the sudden surprise making her lose a hold of her senses just long enough for him to lean in close to her ear.
+</p>
+<p>
+    "Don't speak," He growled, his stinking breath sticking to her moist, oily skin as he wrenched her hands against her breast. "Don't move, and don't say a word to Yara. Understand me?"
+</p>
+<p>
+    Asai nodded quickly and swallowed down the scream she'd been building up, felt it radiate out into her nerves and make her whole body shiver. Saif scared her even more than ever before.
+</p>
+<p>
+    He pulled away from her and looked around, glancing up as the shadow of Asyr's huge bat wings swooped overhead and then vanished behind something. He didn't look normal, Asai realized now as he nervously let his eyes rotate at random. He seemed anxious about something like a scared animal. Any anger or aggression he showed her was just that: a show.
+</p>
+<p>
+    "Something bad is going to happen." He said quietly, looking at Asai straight on. She crooked her head to the side and he put a hand up to keep her from interrupting - she knew something was wrong then. If Saif wasn't really out of sorts he'd have just hit her. "Something really, really bad. You have to be the one to get out alright, though - so whatever you do, don't get in my way."
+</p>
+<p>
+    "I'm not going to-"
+</p>
+<p>
+    "Just shut the fuck up, monkey." His hisses at her, stepping in close so his chest pushed her breasts up and made them ache and catch fire, bursts of electric sensation shooting up and down and around through her body. "I want you to do two things for me after what happens happens. If you do this I'll... I don't know, just when you need the favor returned you'll get it. I swear."
+</p>
+<p>
+    Asai looked doubtful, but stayed quiet and expectant. "Alright. We'll shake on it, in blood. What is it?" Saif smiled sadly and licked his dry lips, pulled his dreadlocks around to rest over his shoulder and crossed his arms over his chest.
+</p>
+<p>
+    "I did horrible things to Yara. Really wretched stuff, things I'm so not proud of I don't even want to... this is all my fault, all of it." Saif was muttering the words and staring down at the ground, his feet kicking up little bits of dirt. In the back of his mind he could feel Yara snuffing out a few more spirits, turning their whole existences into nothing but emptiness, and he shuddered.
+</p>
+<p>
+    "I did what I did. I've done what I've done since then to protect her. Something bad will happen, and I won't be there to protect her any more. Don't get in the way, don't try to keep me with her, all I want you to do is <i>survive</i>. I need <i>you</i> to live and tell her story, it's the... least I owe her. She's my baby sister, and I love her. I don't want her to be known for being the monster I created."
+</p>
+<p>
+    Asai felt goose pimples burn up through her skin as her eyes began to water so she preemptively rubbed her eyes to get rid of the build up. "I love Yara, I'd never say bad things about her. What's the second thing?" Saif's eyes hardened, his mouth curling down and nostrils raising, flaring into a snarl of loathing.
+</p>
+<p>
+    "When you get back... before they can get away, I want you to kill the he-she. Asyr <i>must</i> <i>die</i> for what he's done."
+</p>
+
+<hr>
+
+<!-- CHAPTER 3 -->
+<h2 id="ch3">3</h2>
+
+<p>
+    Asai heard the footstep approaching with the familiar click and tlock of crutches touching ground in near perfect unison, so she didn't bother to turn as she looked out onto the fields of desolation. Her arms were crossed underneath the bearskin cloak making her look like some kind of fantasy illustration, like she saw in some of the books she'd read years ago before her little library of knowledge and smut was destroyed by one of her old friend's outbursts.
+</p>
+<p>
+    "Hello again, monkey girl." Asai finally turned her head to the side, dead empty socket of her bear-helm glaring at the blonde woman with the equally empty sockets.
+</p>
+<p>
+    "Can't you wear your fucking blindfold? Those things are <i>nasty</i>."
+</p>
+<p>
+    Phoebe smiled and shook her head, long blond hair flailing about in the wind. "I didn't think you were so squeamish, monkey girl. Does it hurt to look into the face of reality?" The woman giggled and moved closer, limping on one broken leg while the stump of the other one wiggled around like a decapitated worm. Asai stood and stepped away from the edge pushing any daydreams of suicide back down into the pit of her stomach as she turned to face her comrade in arms with arms still crossed. "I wish I could blame your mentor for these too; it's much easier to live off of loathing and a good vendetta. Ah, but these old withered bones-"
+</p>
+<p>
+    Asai turned away and snorted. "What is it you called me out here for, Phoebe?"
+</p>
+<p>
+    Still grinning, Phoebe pulled herself along and circled around to face Asai intentionally getting up in her business with a shrug. "How's the little nigglet? You still haven't brought her back to me. She needs to be <i>neutered,</i> Asai, how many times do I have to tell you? She's got that black bitch's disease in her, I can taste it whenever I reach out too far and touch her wretched little brain. If you don't let me do something about it I-"
+</p>
+<p>
+    Asai reached up suddenly and took her once-companion by the throat, her fingers curling into elongated cats claws as nails press in and draw bright red driblets out on her pale skin. "You'll what, bitch? Try to wipe my brain? If you could do that you'd have done it years ago when you found out I was pregnant." She spits out angrily. Phoebe didn't stop smiling for a second, but her breathing became much less relaxed.
+</p>
+<p>
+    "That black bitch put some kind of spell on you, yes, but it doesn't reach your daughter." She managed to choke out while only sputtering the last for consonants before needing to gasp for air. Asai's animal senses told her she wasn't telling the whole truth, but wasn't entirely lying either. "She needs to be curtailed before she explodes... and she <i>will</i>, explode, Asai. No matter how much you try to love her it won't be enough in the end. I just wanted... to give one last chance.. To see-- rea-reason." She struggles to say as Asai's claw-grip grew tighter and tighter with each passing second, listening to things she didn't want to hear let alone believe.
+</p>
+<p>
+    Phoebe dropped down onto her hands and sucked in air before breaking into a fit of coughing, tears pooling in her unnaturally empty eyeholes and trailing down her cheeks and washing away the caked on layer of dirt that had built up. "Go home, Phoebe." Asai snapped with a flex of her knee that kicked dirt up into the blind womans face, shooting particles of it up into her empty eye sockets but caused no reaction in the prostrated woman. "I don't think we need to meet again. If the General asks you to reach out to me just tell him I'm dead."
+</p>
+<p>
+    The blonde laughed and reached for a hidden pocket in her flowing robe-like dress, patting it against her skin out of habit before she remembered there was no flask there to be found. "Saif was right about you, Asai." She giggled. Girlish as it sounded it still made the air seem even more dead as it carried the vibrations in all directions. "I tried to help him in spite of what he'd done. You probably think I did what I did out of malice, but I promise, much as I reveled in sharing my prophecy, I only wanted to help. Just like now." The dark skinned girl scoffed and turned her back.
+</p>
+<p>
+    "We're a team, Asai, with or without the rest of them. The last surviving members of B dash Zero Two Fourty, right? Though, I wonder what ever happened to <i>venerable</i> old Asyr.." Phoebe smiled.
+</p>
+<p>
+    Asai shrugged and started to change forms again as the fur on her back began to turn into multi coloured feathers, blues and whites and grays that shined brilliantly in the sun. Phoebe smiled knowingly; she didn't need an answer, nor did she have to read the woman's mind to guess at her reply.
+</p>
+<p>
+    "If you want to keep your little family intact you'll come see me again, monkey girl! She's broken, just like Yara!" Asai pretended not to hear her as she jumped from the cliff, enjoying the rush of her faux suicidal plunge and spreading her wings wide to catch air and soar.
+</p>
+
+<hr>
+
+<!-- CHAPTER 4 -->
+<h2 id="ch4">4</h2>
+
+<p>
+    "<i>Mama! Mama look! Look at my drawing!"</i>
+</p>
+<p>
+    <i>Springy hair bounced up and down as the little girl held up a piece of paper. Hair that was almost orange bright as the sunlight danced between her locks that were a disturbing mixture of Asai's nappy curls and the beautiful, always perfect springs her once upon a time friend had worn all her short life.</i>
+</p>
+<p>
+    Asai beamed a smile as she knelt down to kid level and intently poured over the charcoal drawing the little girl was shoving into her face, one pudgy little hand with five adorable miniature versions of her own fingers clutching onto the recycled paper excitedly. She smiled and looked at the drawing beaming pride even if the scene was a little disturbing to her at first... A picture of who she guessed to be herself and her spritely little daughter standing side by side holding hands, and behind them the bear she wore laying beside the figure of a blonde woman in a pool of black. She didn't want to ask what color the pool was supposed to be.
+</p>
+<p>
+    "That's so good, baby. You're a natural artist!" Asai cheered, snatching her arms around the girl's waist and snuggling her close so that she broke into a fit of giggles and 'Stop mama, I can't breathe!' utterances that just made Asai squeeze tighter as she tickled her with her nose and cheeks.
+</p>
+<p>
+    Bahiyya was her shining star in life, the only thing she lived for now. She'd given up any idea of living for love until she birthed her and learned what <i>real true love</i> really was. She felt like a fool for imagining that her little crush on Weston had been anything but youthful fancy, and what she felt for the ill fated siblings wasn't something she'd refer to as fondly either. But Bahiyya... Bahiyya was an angel sent from above, a gift from the best friend she'd ever had in the whole world - and her horrible, haunted brother, in a twisted way.
+</p>
+<p>
+    "Did anyone come by today, baba?" Asai asked as she pushed herself up onto her feet and tossed her bear cloak away, passing into the deeper part of the cave where she kept a fire burning throughout the day to keep things lit and warm for the two of them. Bahiyya shook her head no and skipped over to her pile of charcoals, flopping down onto her stomach and kicking her feet up into the air behind her as she started to sketch huge black swirls on pieces of bark and humming to herself - ever so occasionally mixing things up with a sketch of one of the animals Asai most often turned into.
+</p>
+<p>
+    She looked down at her little girl and felt pride swell up in her, pride for what a good child she'd become and for herself at managing, somehow, to raise her to be what she was. <i>What</i> she was... She still wasn't sure, and that worried her in a way she wasn't comfortable acknowledging. Bahiyyah was a miracle, <i>her</i> miracle, that was what really mattered - that was what she'd tell herself.
+</p>
+<p>
+    Some things about her really were magical, in familiar ways that made her skin crawl and a feeling of unease roll over her mind like a fog when she spent too much time at home in the cave rather than out in the woods surrounding it. The walls were covered in drawings of charcoal and markers, lots of stitched together recycled paper that Asai had found, stolen or made all by herself to please her little girl. The pictures weren't all as morbid as the one she was working on, thank god. Some were simple scenes, things Bahiyyah had seen throughout the day or recalled from being a very young child, so young that Asai was impressed with her memory. She was able to draw a crude but disturbingly accurate 'series' of pictures in red and black depicting the three day period of her third birthday when Asai had taken her bear-skin cloak from the old owner to protect her.
+</p>
+<p>
+    At first Asai just assumed it was because the fear of nearly being mauled by something so huge, so loud and vicious, had imprinted the memory deep into her mind. Flash-frozen still pictures that she couldn't wipe from her subconscious. But lately...
+</p>
+<p>
+    "Mama?"
+</p>
+<p>
+    Asai blinked and shook her head, arms crossed and stroking the soft skin just below her armpits that was exposed through her dark tan tanktop. She forced a smile and sat up on the little beanbag chair she usually slept on, looking over her curled knees at the expectant little girl standing over her. "What's wrong, baba?"
+</p>
+<p>
+    "Mama, you weren't listening!" She huffed, stamping her foot in a demanding way, arms stretched downwards and her small fists clenched. Asai felt her feelers reach out at her and she pushed them away as much as she could, using the latent psychic power Yara had gifted her accidentally when she first conceived Bahiyyah.
+</p>
+<p>
+    Asai reached forward and grabbed the little girl by the hips with a smile, pulling her up onto her shins and lifting her up like she'd seen kangaroos do in cartoons before, bouncing her a few times in the air to her delight. "I'm listening now, what's wrong?"
+</p>
+<p>
+    Bahiyyah smiled and giggled, squirming free from her mother's grasp and plopping back onto the cocoa colored soles of her bare feet. Wheeling around on her heels she turned and pointed out to the mouth of the cave before sweetly stating her desire: "I said, you told me you'd take me to go see the flea markets for the holiday, but I was thinking instead- I was thinking I want to go the dead zone instead." Asai's eyes steeled in an instant, jaw clenched - the look of a soldier cutting themselves down inwardly.
+</p>
+<p>
+    "No." She said sternly as she sat up properly, on eye level with the four foot nothing girl.
+</p>
+<p>
+    "Mama, I want to go see it!"
+</p>
+<p>
+    "No." Asai repeated, standing up and moving towards the 'kitchen area' in a huff trying to ignore her. It wasn't much more than a cooler full of ice she occasionally replenished and a few dead fish or small critters floating around inside to stay fresh. She pulled out a large trout she'd caught the other day, clicking her tongue annoyed with herself as she fingered the talon holes that would make descaling the thing a pain in her ass, and without turning to face her daughter began feeling about for a knife to use.   "You're not going anywhere near there, Bahiyyah."
+</p>
+<p>
+    The little girl began pacing deep in thought, pulling her hair back and trying to tie it the way her mother did to her own, failing and then letting all the bouncy springs flop down around her head over and over. "There's a full moon soon," She repeated aloud as if she was giving her mother a presentation to win her over. "The moon controls the tides of the planet, and, and, and some research I read about-"
+</p>
+<p>
+    "Read about where?" Asai interrupted, cursing under her breath as she nicked under the skin and nearly punctured an organ.
+</p>
+<p>
+    "Miss Renard let me read her books." She chirped, excited by the memory of so many letters and ideas and pictures all combined into a bunch of paper that could fit in her tiny hand. "Um, she-she brought me some, and took me to her office in town. Please please don't be mad, I know you don't like her, mama, I'm sorry I didn't tell you, I wanted to but I knew you'd be mad and I don't wanna upset you I just really liked looking at them and I-"
+</p>
+<p>
+    Asai snorted but didn't say anything. She felt red, her ears burning like she had a heat stroke. She could smell Phoebe when she came into the cave, she'd been smelling her here for weeks and Bahiyyah lied about it every time. One of the benefits of being in animal form for so long was she'd gotten good at spotting out a lie in more ways than one. But it wasn't just the lying and half-truths, though that stung badly and hurt her heart in ways Bahiyyah probably couldn't and wouldn't ever understand, it was the worry about what it meant. It was the (somewhat) irrational fear that Phoebe was trying to convert her daughter to something she'd spent so much time protecting her from, trying to turn her own child <i>against her.</i> And Phoebe wasn't there for her to lash out at, only the little girl with her twirling patched up dress, nervously entreating her mother to allow her to leave their home.
+</p>
+<p>
+    "I read that the moon has magic in it," Bahiyyah continued to say slowly, speaking as deliberately as she could; her mother was ignorant, after all, and needed to be educated in something that made 100% perfect sense in her own mind. If her mama just read books like she did, and sent out her little mind-feelers into the sky to observe the world, maybe she'd understand too. "Some religions used to use the moonlight, of the full moon, and say prayers and do rituals to bless things with good luck.
+</p>
+<p>
+    "You're not listening!" She shouted in frustrated little girl screaming pitch, stamping the ground angrily as Asai pushed past her without a word.
+</p>
+<p>
+    '<i>No, I'm not, and I wont.'</i> She thought to herself as she pretended to be busy cutting the half cleaned fish and leaving a mess of scales behind wherever she dragged the carcass about. Bahiyyah followed up with an exasperated and desperate plea of "MUH-THUR!" before again devolving into childish hysterics as she circled around Asai pumping her arms up and down like a drunk bird. Asai sat down cross-legged with her fish and a dull knife and started trying to scale it again, looking up at her daughter angrily as she raved.
+</p>
+<p>
+    Unmoved by her mother's sternness she remained insistent, reaching for her cheeks and squeezing them into a fish face, pat-slapping her cheeks as she made her best pouting beg expression. "Mama, I <i>need</i> to go there! It's important! I've got to--"
+</p>
+<p>
+    Asai wrenched her hands away, twisting them enough that Bahiyyah started to whine and cry out, pushing and kneeing and turning her body to make it as much of a nuisance to hold onto her as possible.
+</p>
+<p>
+    "Do <i>NOT</i> hit me - EVER!" Asai snaps at her whimpering daughter, fear flashing up into her eyes as she looked up at Asai like a frightened animal looked at a raging bear. "When I tell you no, it means <i>NO</i>. N. O. You're going to stay here for the rest of the week now." She saw Bahiyyah open her mouth to say something and popped her hard on the lip.
+</p>
+<p>
+    A little dot of something red burst free from where it had been hiding away and stained her otherwise perfect, shiny tanned flesh as she whimpered and started to flat out <i>bawl</i>.
+</p>
+<p>
+    <i>What am I so angry about?</i> Asai asked herself as she pulled her hand back and rose up to her feet, watching little Baba curl up and start scream-crying into the beanbag, flailing her limbs about wildly the way kids did when they were upset. Screaming at the octave reserved for little girls, the muffling only easing the pain somewhat. As she screamed Asai noticed some of the drawings on the walls begin to curdle like they were being kissed by fire, blackened edges twisting in around themselves and rolling the papers into charred scrolls though there was no visible tongue of flame lapping across the pressed fibres.
+</p>
+<p>
+    "Stay inside and take a nap, Bahiyyah." She said loudly as her breast throbbed from her heart going ninety-thousand miles an hour wild. Stalking over to grab up her bear-skin cloak and tossing it around her shoulders she picked up pace quickly and ran out of the cave while shifting form into something lithe and canine. One foot after the other she started pushing herself as hard as she possibly could into getting far away from their little home before she did something she would really, really regret.
+</p>
+
+<hr>
+
+<!-- CHAPTER 5 -->
+<h2 id="ch5">5</h2>
+
+<p>
+    "She isn't a monster!"
+</p>
+<p>
+    Phoebe snorted in retort as Asai led her forward, powering through people in the market who mostly didn't bother making way for the hastily clothed little black girl pushing her blind friend around in a wheelchair. Asai gave it a jerk to the side as if she was going to upend Phoebe onto the ground but there was no dramatic reaction or reply, just that one snort and a sudden imagined eye-roll in Asai's head to go with it.
+</p>
+<p>
+    "She isn't a monster, Phoebe! I don't care what you think you saw, Baba wouldn't hurt a fly." Asai was lying through her teeth. Phoebe could tell that much without her old abilities. In her mind it was her duty to protect her daughter even to the point of being blind to the obvious risks she was playing with. Week after week Bahiyyah had begged and pleaded to go see the deadzone, always getting more insistent when the moon was waxing closer and closer towards full. Every time Asai refused and Bahiyya would act out still more, even if I meant that she'd spank the girl for throwing a fit. The tantrums were cute at first, in retrospect anyway, but lately they were growing... dangerous.
+</p>
+<p>
+    "I know what you're thinking little girl," Phoebe jeered, looking up and backwards at Asai by turning her head backwards on her neck. "I don't need eyes to see what she's done to you. She's like the bitch was, isn't she? Can't help but to hurt anything nearby. Revels in it-- Hold on."
+</p>
+<p>
+    Phoebe held out her hand in front of a vendor selling old world goods, things no one could use any more for simple fact that the necessities and tools weren't around now. She felt around in the way the blind tended to, seeing with their fingertips and palms to make up for their lack of ocular sight, and picked out two DVD sleeves with half-legible covers of Disney movies on them still easily identified by the familiar logo. She tossed a few coins at the man who jumped in surprise as he tried to catch them, glowering a bit at her rudeness - before he could say a word Phoebe had motioned Asai on again and the pair continued.
+</p>
+<p>
+    "What are you going to do with those?" Asai asked slowly. She knew what movies were, she'd even seen a couple. Without saying anything her ward began to peel one of the cases out of its wrapping, carefully setting the <i>'Beauty and the Beast'</i> disc onto her lap in the open faced case, took it out holding it in both hands, and then snapped it in half. Then she took the halves and broke those two, and on and on until the sharp jagged bits were so small she couldn't break them further and her fingers were cut and bleeding. She tossed them aside without caring who they might inconvenience, huffing, and held up the second case.
+</p>
+<p>
+    "I can destroy that because I want to. I don't like it, I don't want to think of its existing, so the thought of making it <i>not</i> is much more enjoyable." Asai quirked a brow but kept pushing the chair down the trail leading away from the marketplace and curling around a small manmade pool for collecting and processing rainwater. So much as it ever rained anymore. "Now imagine I was a child, a wretched little monster without any concept of other people, or self restraint, or-- 
+</p>
+<p>
+    Imagine I was a child with the power to make or unmake anything. Imagine I also had a disease I couldn't control, wasn't aware of, that would drive me mad bit by bit until I died or killed everything around me."
+</p>
+<p>
+    Asai <i>did</i> upend the wheelchair this time. Phoebe rolled forward onto the dead grass of the knoll to their left and put her hands down in front of her to keep from sliding all the way. Her palms were bruised and red as she pushed herself up to her knee and looked around at nothing at all, chest heaving as adrenaline was rapidly produced, shipped out and delivered throughout her body.
+</p>
+<p>
+    Her nostrils flared as she kicked the wheelchair at her friend, snapping her in the teeth with the bottom of the metal frame just as the blind woman turned in reaction to the sound. Phoebe let out a grunt of pain and tried to stand, leg kicking the dirt while she attempted using the wheelchair for balance as her assailant sprinted forwards and kicked it from under her. She grunted again and reached up trying to claw and grab at her attacker before being sent prone once more as the inarguably stronger woman began kicking and shoving her.
+</p>
+<p>
+    "If it looks like a duck, and acts like a duck --" Phoebe yelled out while still trying to right herself, much less intimidating covered in mud and grass stains. Asai screamed like a banshee and raised her claw up in the air, full formed bear limb three times either their size coming down on the helpless blind woman before she could even let out her breath.
+</p>
+<p>
+    "I don't know why they gave you a little mutt to raise, anyway! You've always been a scared little girl inside! Why let a broken child raise a mad one?!" Asai didn't want to hear Phoebe any further. She bellowed loudly like she was some sort of wild creature full of blind and unfathomable rage, the sort that could only be locked away and packed in tightly for so long before it would burst free and consume anything and everything around it. Her massive bear claw reared up over her head again but this time drenched in blood.
+</p>
+<p>
+    Phoebe's blood. Bright red and dark at the same time, darker than anything she'd seen before come out of another human being.
+</p>
+<p>
+    Asai stopped moving and felt her heart ache, her limbs beginning to tremble and lose any semblance of strength. She couldn't walk; couldn't stand; she barely felt able to remain conscious as the weight of what she'd just done began to absorb into her mind.
+</p>
+<p>
+    <i>And now you see.</i>
+</p>
+<p>
+    Asai blinked and she was there behind the wheelchair again, knuckles wrapped so tightly around the handlebars that drove Phoebe onwards that her hands ached painfully when she unwrapped them. She looked down at the blond woman with her long hair bedraggled about her shoulders with a mess of leaves and dirt clinging to the uneven and unbrushed strands and knots, and for a quiet moment she just stared back into the eye-less sunken holes on her face trying to understand what had happened. The wry smile that looked back at her, sightless, didn't seem interested in sharing.
+</p>
+<p>
+    "How?" Asai muttered, her shivering fingers moving up to play around the lines of her lips. "I killed you; I saw, felt it! I didn't mean to, I was so angry all of a sudden-"
+</p>
+<p>
+    Phoebe reached up and clutched onto Asai's hand, her fingers squeezing her knuckles together emphatically. "It's Bahiyyah's influence, I've been trying to warn you about it. She isn't the same as Yara, Asai. She's weaker in some ways, but more dangerous in others. She works her way into your mind in subtle ways and builds up layers of dissonance and contempt and rage; I don't even think she's aware of what she does, I think she's been doing the same to herself for all her life and didn't realize it.
+</p>
+<p>
+    "If you'd just let me neuter her abilities when I could have maybe things would be different now, but it's too late for that. She's affected me too, I think. It's hard for me to focus when I'm around her, she's stronger than I am now. Hell, I can feel her from here and we're, what, a dozen miles from your little flintstones home? It's why I keep going there when you're not around; don't think I want to do it.... Well, I don't not want to, but part of it is her influence, and I can't force myself on her when she calls me there.
+</p>
+<p>
+    "She's turned you into a... a conduit for her power. You think you defend her because she's your child, but that's only a part of it. You're her henchman more than her mother, you just can't see it."
+</p>
+<p>
+    "There are <b>more things in heaven and earth</b>, Horatio, Than are dreamt of in your philosophy." Asai recited abruptly, standing straight and crossing her arms slowly in protection of her soft innards. Slowly she shook her head to wipe away all the confusing thoughts she was having; slowly she took a step back and left Phoebe alone in her sad little chair; slowly she looked off towards the woods she'd have to pass through or over to get home to her child once again.
+</p>
+<p>
+    "Years ago I killed this bear. It was only protecting its cubs, you know? Like how I would have done if I had seen someone or something coming for Baba. I had her in a sling when I saw the marks of its claws on some trees and I had the idea - I thought maybe I could do something useful with a coat that big and heavy. It was almost winter and, well it was right after... after all all went to shit. I didn't want to come home to y'all for anything if I could avoid it.
+</p>
+<p>
+    So there I was with a huge bear just staring at me. I could hear her cubs off a ways as it charged. I left Baba up tied in a tree real careful, and I came down as a lemur, then I turned into a hawk and took a part of its ear - you can still see the mark. It lunged at me and I shifted into a snake to poison it and make it slow and clumsy, then I turned to a lion and wounded it so it couldn't run. I heard the cubs whining for her then.
+</p>
+<p>
+    And you know what I did? I got down on my knees in front of the thing and I used a knife, not my hands, a tool, and I cut that fucker open. I watched it bleed out and I scooped the blood and entrails into my hands and washed it over my face like a fucking baptism. It was so warm and it smelled wretched, but somehow I felt amazing. I felt... alive. I imagined Yara standing beside me with a smile as I wrang the blood out of my hair and looked up into the sky and I thought she'd want me to have this horrible, ugly, bloody thing. That I was more beautiful as a blood drenched little girl than any makeup could have ever made me."
+</p>
+<p>
+    She gave Phoebe one last look, pleading with her wide beautiful eyes for some kind of guidance. <i>What would you have me do then, if it's not too late?</i>
+</p>
+
+<hr>
+
+<!-- CHAPTER 6 -->
+<h2 id="ch6">6</h2>
+
+<p>
+    Days kept passing faster than Asai could realize the sun was setting and rising again. She wasn't sure how or why her sense of time seemed to be off, why she was slowly losing touch with reality, but she knew it had something to do with the moon. She'd never noticed the moon so much before Bahiyyah had started her little crusade to be allowed out to bask in its glory, but now she knew about as much about it as her daughter did. 238,900 miles away and rotating on an axis around the little blue marble she called home and always lording over her night after night after night while her daughter begged and pleaded to go out to see it.
+</p>
+<p>
+    Until the night when she begged no more.
+</p>
+<p>
+    Asai woke to a nightmare, the same one she'd been having for weeks without break or fail. She was lost in the forest on a moonlit night that was brighter than anything real she'd ever seen and more like a painting with the way the moonlight made godrays down through the leafy canopy. Beams of moonlight illuminating patches of sparkling twilight forest that swirled around her body in all directions making it impossible to navigate. Rising to her feet in these familiar but strange surroundings she would begin walking in a direction based on what she could only define as 'her gut'. Something was pulling her to the north, or what she thought to be north, and she had to follow it. She had no choice.
+</p>
+<p>
+    So, just like in the nightmare that had plagued her un-waking hours, Asai followed the same trail she always did - suspended in a state of dreamlike abandon where she wasn't sure she <i>was</i> awake. She watched footsteps she'd taken in the past appear before her like guiding stones as she wandered through the forest this way and that. Foliage seemed to part and bend away to reveal the true path to her, forest creatures cowed away from her approach knowing what would become of them if they beset her. She watched the eyes of wolves and snakes and bear cubs turn away from her gaze as she stumbled forward, half-dressed in a nightgown that didn't fit and a pair of uncomfortably tight shorts underneath, her breasts swaying uncomfortably inside her shirt so that she had to hold an arm over her chest to support them. Moonlight beat down on her like a spotlight showing her position in the forest as she continued to approach her objective, the one spot in the forest she'd never been able to visit in dream before the sun would bring her back into the world proper. She could see it before she saw it. It was a more familiar sight than her own face was at this point. A nightmare to end all nightmares. She pushed her arms forward and felt the scratch and cut of branches and razor tipped leaves cutting at her flesh trying to bar her passage through the thick overgrowth, but she couldn't be stopped now. Stumbling forward and landing on hands and knees she saw that horrible building off an impossible distance from her, looming over trees that seemed to be in a valley beneath her that curved and swelled into the earth in an unnatural way. It was that same horrible abandoned building that had claimed the lives of her closest friends in the entire world. The trees were the same ones her best friend had turned into ash and then the ash into molecules and those building blocks of existence into total nothingness. That wretched place that was razed to the ground and the bits it was made of were obliterated into nothingness but there it stood surrounded by forest as if nothing had ever happened. Asai felt her stomach curdle and twist around itself as she began crawling forward mouth agape, and then she heard a voice that was just as familiar and terrible, but for different reasons.
+</p>
+<p>
+    "<i>The moon is showing us the way!"</i>
+</p>
+<p>
+    Asai opened her mouth as she saw her daughter appear down the trail that seemed to jerk 90 degrees and go straight down; her body was illuminated by the moonlight in the same way she was but instead of a spotlight it seemed to be <b><i>projecting</i></b> her spritely form as it skipped and danced along the vertical path. She opened her mouth wide to call for her daughter but no sound came from her lips. She reached out and began to pull her fingers along on the ground, dirt wedging itself up between her fingernails and flesh as she dragged her tired body along down the trail. Vertigo consumes her, makes her vision spin as a daze catches her senses and puts her in a momentary whirl but she keeps hurriedly moving forward on hands and knees until her flesh is cut raw by rocks and twigs and roots and she's forced up onto the tired soles of her feet instead.
+</p>
+<p>
+    Asai ran off into the fog chasing the shadow of her daughter, being lead closer and closer towards the ghostly remembrance of the building where her life changed so dramatically. The place where she'd been given a gift and curse all at once, where her life had taken a turn she'd never expected and she was forced to rely on herself for the first time in all her days. She went from scrambling along to running, full force, chasing the ghost of her daughter as it danced through the trees like a nymph, giggling and cooing loudly like a delighted child might. Asai knew better. Whatever this was wasn't the daughter she knew, or that she thought she knew, anyway. It was something altogether unnatural and she began imagining that the moon was to blame for all of this and had stolen away her precious little girl and replaced her with some kind of demonic avatar of its ire. She reached out and pushed off of trees leaving the imprint of her hands and breast on the bark like they were make of memory foam, momentum from the shove sending her faster and faster on the plummeting path that kept going straight down towards the pit of the underworld. She found herself quickly diving between the boughs of trees that contorted into some kind of fae maze to disorient her and make her lose the trail of her daughter's spectre. Her body contorting in impossible ways to steal between cracks or to find purchase of stray limbs she could swing herself on as she took to higher climbs in a desperate bid to bridge the distance to her goal. Panic set in as the miles disappeared behind her and she began feeling more and more desperate to get to poor little Bahiyyah. Whatever was happening she couldn't be doing herself. She needed her mother to come and save her.
+</p>
+<p>
+    She stood in the doorway of the long since abandoned and once demolished hospice, a hand on the doorknob and beaming excitedly as she looked back at her mother. Without a word she passed inside the pale-blue building that continued to glow like the rest of the forest, half mirage and half something real and tangible. Asai bit her tongue as she tasted death ash in the air and morphed cheetah limbs as she hurried forward and passed through the entrance. The insides of this resurrected architectural corpse were somehow more solemn than they seemed 13 years prior. There was no active biomechanical piping and wiring humming through the walls. No impending sense of dread and fear knowing one of the grotesque 'nurses' could stalk down any dull gray corridor at any moment. It was just Sad, and Lonely, and it all felt unnaturally Empty.
+</p>
+<p>
+    She could see the footprints of her daughter amidst the death-ash that coated the floor like carpet and she followed them hurriedly. Curious as much as she was scared to see what she might find lying in wait for her at the end of the trail if she ever made it so far. She knew what this was. This was the part of the story where the antagonist made themselves known to the protagonist, put all their grievances out to air and laid out their plans in a concise, logical manner no matter how illogically driven they might be, to show the hero just how hopeless their situation is. Asai never wanted to be any kind of hero, and this wasn't her story so far as she was concerned. This was the story of a boy and girl who had hurt each other - and themselves - for years and years and took out their frustrations on the world around them. She wanted no part of it anymore. She wanted a part in her own story.
+</p>
+<p>
+    Asai grimaced as her feet dragged up the stairs before her and her toes curled around the blood encrusted wiring that lined every corner of the building. She felt like she was in a different world because here everything was dark or light shades of cerulean with hints of midnight interspersed. Handholds felt hard but transparent at once, and if she focused hard and long enough on her surroundings she thought she could see through the walls, up through the trunks of ethereal trees to see the blanket of stars overhead. With each step she took she imagined walking through a desert of death as the sound of cracking bones and skulls voiced over the silent 'pat, pat, pat,' of little puffs of ash and dust went up around her ankles. She swallowed and felt like her head was walking up amongst the clouds and gravity wasn't a concept that made sense here. If this was a dream it wasn't hers either, she insisted inwardly. The story would end tonight.
+</p>
+<p>
+    "The monsters gave you your powers, mama."
+</p>
+<p>
+    Asai stopped and twisted her fingers into a fist, teeth gritted against each other until the gap in her front pair started to really hurt and she had to stop. She stood straight and felt hairs on the back of her neck stand up as she looked at her daughter sitting cross legged in the center of a room that she didn't recognize and couldn't divine a purpose for. She held a small skeleton in her lap, cradling it like a baby doll, and smiled at her mother behind a curtain of bright brown curls that didn't look anything like Asai's nappy head of hair.
+</p>
+<p>
+    "They came to this world and shared a gift with you. With all of you. Some of you squandered it, some of you used it to help others.... Lots of you used it to kill and to create voids in the fabric of existence." Bahiyyah frowned as her hand drew over the skull of the little infant corpse she held, slowly passing her palm over the eyes as if she was closing them. "So why do I have these powers too if I never met them?"
+</p>
+<p>
+    Asai opened her mouth to say something and then shut it back tight. She took a step forward and flinched expecting Baba to do or say something to her for moving but there was no reaction whatsoever. She just sat there eerily petting her little corpse doll and looking to her mother for answers.
+</p>
+<p>
+    "They live in the moon. It isn't your moon anymore. This is my moon." Bahiyyah's hand drew over the center of the small child's skull and crushed it sending fragments of splintered bone flying all through the air in random directions, blood dripping from her palm and onto her lap as she slowly pushed herself up. "Why do you keep following me?"
+</p>
+<p>
+    "Because you are my child." Asai insisted with as much confidence as she could pretend to have. She wanted to believe her words, too, but it was so hard to do so now. She didn't want to be a mother anymore, she was tired of that game. Everything felt so hard and pointless; she'd been clutching at straws for so long trying to pull herself up from the chasm she was familiar with and all she wanted was sleep. "Because you are my child, I love you. I won't let you go, Baba."
+</p>
+<p>
+    The child scoffed and approached her mother. One second there was nearly a dozen feet between them, then no space at all as Bahiyyah gave her mother a shove backwards with the force of her being. Asai blinked and recoiled from the impact and felt like she'd been run over, and as her eyes opened again Bahiyyah was standing there with her arms crossed just glaring at her. "I'm not of you, of any of you, or of any of this, mama. I don't belong here and I don't want to be here any more than you want to be hearing these things. Nothing belongs here, nothing deserves to be here any more." Bahiyyah smiled as she said these things and slowly her arms uncoiled like serpents and rose up into the air. Fingers drew out above her springy hair and from the tips came flames that burned blue light, just tiny wisps of it, but began to grow larger and wilder as wind picked up and took them from her. The supernatural winds swirled around the little girl in front of Asai and made fiery serpents to keep her company, new friends for this child of the moon. "All the colors of the rainbow and I choose red. Red like blood; so beautiful. See, I can make red too!"
+</p>
+<p>
+    Excitedly Bahiyyah begins to dance and the serpents of fire follow around her scorching anything they touch. Her arms flail and twirl about through the air, fingers trailing across beams of metal that melt under her touch and reduce the integrity of this place just one little bit more, and then she's at another one repeating the process. Asai reaches out and tries to say something to warn her daughter against this but the air was hot and burns her lungs so she clutches her throat and simply stops breathing altogether. Everything hurt and there was fire and there was blood and she was hot and in pain and she just wanted it all to finally end. She closed her eyes and remembered that was exactly what she was thinking before she had Baba; she just wanted the pain to end, once and for all.
+</p>
+<p>
+    "I'll burn away everything," The little girl continued as she leaned forward at her mother from across the room, menacing at her as her arm swirled circles drawing her fiery power in an arc behind her back. "The forests and all their trees, the lakes and all their life, the cities--" She grinned and lept up into the air nearly a foot, landed and made the whole building start to shake and rumble. "I'll kill <i>everything</i> and make it like the moon. Starting. With." Bahiyyah swirled her arm in a smooth motion with the rest of her body, spinning and twirling suddenly as she leaped forward acrobatically and distracted Asai from the oval of bright oranges and reds that was surging towards her fast. The young woman held out her hands and felt the impact against her gut burning her palms and ripping the skin away from her muscle even as it tried to turn her onto her back. Holding it away was exhausting but somehow she managed to push off of the projectile just as her legs gave in.
+</p>
+
+<hr>
+
+<!-- CHAPTER 7 -->
+<h2 id="ch7">7</h2>
+
+<p>
+    Asai fell to the ground and twisted her ankle. She didn't even notice it as she stared face forward, staring at the wall through a newly crafted hole, stared like she'd seen the face of God for just a moment.
+</p>
+<p>
+    That horrible creature had sprung on them in a second, faster than Asai could possibly have reacted but too fast for Yara to really understand what had jumped at her before she reached out and destroyed it. It's mutated camel like face contorted in pain for the split second it still existed, freezing in mid air like the afterimage of some sort of spectre before Yara wiped that away as well. Then Asai understood why Saif had told her not try and keep him with the group, but she couldn't <i>comprehend</i> what his warning really meant even as she looked at the product of it all. She just stared and felt... helpless.
+</p>
+<p>
+    The smile on Yara's face was that same delighted look of childlike bliss and psychopathic amusement, the one she'd make whenever Asai asked her why she enjoyed killing things. But... something was... wrong? She'd only meant to explode the big gray monster she felt coming, she could sense that it wanted to kill her, like, fifteen minutes ago, and she told Saif she would look after Asai even though she didn't want to do that anymore. Asai wasn't fun when she wasn't a huge bear with razor claws, tearing the big monsters into bloody masses of pulp and gore.
+</p>
+<p>
+    Her smile faded into a frown of confusion, tilting her head like a curious puppy looking at something it didn't understand. If she only felt the alien coming, and had only shot her energy out at the alien, why was Saif standing there with a hole in his gut?
+</p>
+<p>
+    "Saif?" Yara asked the way she'd ask him why clouds were white but the sky was blue.
+</p>
+<p>
+    Saif stared at her with a line of drool dripping slowly down from the corner of his mouth that turned vibrant blood red by the time it hit his chin. He slowly looked down at the hole where his organs and flesh and bones used to be. For the briefest moment he wondered how he was even conscious while missing part of his spine but by the time the thought had finished he was collapsed onto the ground in a pool of his own blood.
+</p>
+<p>
+    Asai winced before she knew why and pulled her hands over her ears mere seconds before Yara let out the most horrifying scream imaginable. A sound of complete and total desolation, forlornness, confusion and abject sorrow.
+</p>
+<p>
+    Her hands went down onto Saif and clutched him tightly around the arms and neck, trying to hold him up. She was covered in his blood before she realized he was bleeding, the brilliant dark ichor welling up underneath him and literally pouring out in places where her burst of energy had been interrupted by the realization of her target. Her hands went down to try and hold them closed like in a story Saif told her once, but there was just far, far too much blood - and he gasped in pain every time she touched his horrifying wounds.
+</p>
+<p>
+    Instead she started to use her head - or at least her mind, and 'pinched' them closed with her powers. Saif gasped and let out a silent scream of his own, his eyes looking sunken and dilating wide, but the bleeding finally stopped.
+</p>
+<p>
+    "Nonono no no no no no- Saif wake up, wake up, pleasepleaseplease--" Yara was blubbering, snot running down her nose as tears wiped away all the blood her hands had smeared. She kissed Saif all over as she sobbed and begged and refused to believe what she was seeing. Kissing his sunken eyes, his forehead, kissing his cheeks as she felt the warmth begin to fade out of his face, kissing his lips hard just the way he liked to try and get him to use his big strong hands and touch her the way he liked. She tried to straddle him like he liked, thinking maybe if she grinded against him he'd stop playing this mean horrible prank on her - instead he let out a deep groan of complete and total pain, a sound so near to death that she bawled even louder and rolled over and off of him again with a shriek.
+</p>
+<p>
+    "Saif, stop being a fucking baby and wake up!" She screamed, slapping him on the face hard enough she thought she might have broken one of her fingers. Saif should have punched her for hitting him, but instead he just weakly turned his eyes up at her looking... betrayed? Sad? She couldn't figure out what his eyes were trying to say, hers were too drowned in tears to make sense of his face. She kissed him again and nipped at his lips, whimpering over and over, "NO NO NO THIS IS NOT HAPPENING NO NO NO NO!" Like her refusal to believe what was in her arms, in front of her eyes, could somehow make it untrue.
+</p>
+<p>
+    Asai slowly got up onto her knees and tried to crawl slowly towards the siblings, unsure of what to do or say or-- Why hadn't Saif told her this was what he meant? Jesus, this couldn't be any worse. But then, it dawned on her as she looked around... It really could.
+</p>
+<p>
+    The walls seemed to be scared of Yara the way they retreated, but then she realized that was impossible. They weren't retreating, they were disintegrating. Not the quick, all-at-once way Yara normally tore the fabric of reality to shreds, she could literally see the particles pulling away from each other and then get turned into literal nothingness. There was no transference of energy, no atomic alchemy, just... nothing. She could feel it in the air because even that was being deleted too.
+</p>
+<p>
+    "Yara-" She tried to say, tried to reach out and calm her friend if she could.
+</p>
+<p>
+    "Nononono," She whimpered louder, screaming into Saif's dying ear as she felt his breathing slowing more and more by the second, and then going back to her mindless sobbing. "Hit me, please Saif? Saif, please, do something - I'm really hungry, can you wake up please? Please? This isn't happening, this can't be-"
+</p>
+<p>
+    This time Asai shouted, "Yara!" and reached out to touch the girl's arm. She regretted the decision in a split second as she felt her finger start to not exist, a terrifying burning that didn't stop even when she pulled away and realized a tiny bit of her finger was no longer there and had started to ooze blood.
+</p>
+<p>
+    "<i>Run, monkey! I fucking told you!"</i>
+</p>
+<p>
+    Asai didn't stop to wonder how Saif was talking to her in her brain, her bloodied fingers scratched and scrabbled on the tile flooring trying to get some sort of purchase on it as she pushed herself up and started running. She ran and watched the world turn colors around her, hallways warping and twisting around like some kind of funhouse of mirrors, her feet slapping the ground loudly as she took off quickly as her thick human legs could carry her.
+</p>
+<p>
+    "<i>Saif you're not dying, okay? Wake up." Yara whispered quietly. She had no more tears left and her throat hurt too much now to cry any more. She pressed her forehead against Saif's - he was cold now, much, much too cold to be a good thing. He barely was breathing anymore, his chest almost completely still as she pressed hers against him.</i>
+</p>
+<p>
+    <i>She kissed his lips over and over but he didn't even move in reaction anymore. No matter how she touched or licked or nipped him he didn't do anything but stare up at the ceiling, staring past her, blinking only on occasion.</i>
+</p>
+<p>
+    "<i>Saif, can you look at my pictures when we get home? I'll paint you something with my really nice watercolors - I stole them from Weston's office, don't tell him though. I'll paint you a picture of mommy and daddy... I didn't want you to know I still remember what they look like, because I know how angry you get because you can't... I'll paint you a picture so you can remember too, okay? So please wake up."</i>
+</p>
+<p>
+    <i>She jumped and let out a gasp as something cold as ice touched her cheek and she realized it was Saif's hand. She smiled brightly and started to weep again, excitedly kissing Saif's fingers one by one on the fingertips. She started to say something when she saw his eyes looking right at her and really seeing her for the first time since he'd fallen, and then she saw what she'd been refusing to see as she tore the world around them apart.</i>
+</p>
+<p>
+    "<b><i>It's okay.</i></b><i> Saif says weakly to her, stroking her soft cheek with a distant smile. His lips didn't seem to be moving really, and it didn't sound like his tongue did either, but the voice was definitely his. Tired, half asleep kind of tired, and very sad, but it was her big brother's voice.</i>
+</p>
+<p>
+    "<b><i>It's ok, Yaya. I love you. It's gonna be okay.</i></b>"
+</p>
+<p>
+    <i>Just like that, Saif was gone; at the instant where his soul left his body and went to wherever souls went home to, everything around the pair was gone as well. No smouldering ash, no more flames or corpses or screams.</i>
+</p>
+<p>
+    Nothing. Just. Nothing.
+</p>
+
+<hr>
+
+<!-- CHAPTER 8 -->
+<h2 id="ch8">8</h2>
+
+<p>
+    The building continued to tilt to one side as Bahiyyah sent waves of fiery force this way and that, howling delightedly as she felt the building collapsing on itself, watching the demolition from outside of her body in some inhuman manner that didn't make sense to Asai's mind when the images blew through her too.
+</p>
+<p>
+    Tears streamed down Asai's round cheeks as she reeled from the impact of Bahiyya's psychic attack, head pivoting up to look her daughter in the face. Staring into the pale-blue pupils and the smile of cruel childlike amusement that had overtook her expressive beauty. Asai swallowed her heart down into her gut and felt it push down like a thousand tons of iron similar to the collapsing frame of the building they'd only just escaped from.
+</p>
+<p>
+    Clouds of dust waft up around the two of them in a circle centered around Bahiyya as she let loose another blast of force - this time, though, Asai was ready for it. Deftly she twisted her spine to the side, turning on her hip even as she put her arms up into a diving pose and near instantly shifted her body into something fat and serpentine. The attack grazed around her thick armor of scales and she shifted again, legs sprouting from the 'torso' of the thick anaconda first in a pair, then multiplying until she was some ungodly chimera between a centipede and a reptile. Asai thanked the gods she couldn't still cry but her heart was breaking as she steeled herself for what she'd have to do.
+</p>
+<p>
+    "Die!" Bahiyya screamed at the top of her lungs, the shrill shriek curdling into a horrible giggling laughter as she waved her hands like she was tossing baseballs at her mother. The ground exploded in chunks as Asai narrowly evaded each attack, watching them come towards her in slow motion thanks to her animal reflexes she switched between forms with no apparent intention or forethought. One second she leapt up with cricket legs too large and horrible to behold, impossibly realistic to the point of being surreal, then another she shifted on all fours in the form of a wolfhound pushing itself to the peak of exertion trying to bridge the gap of 60 odd feet between them. Asai howled as a windblade cut into her thigh - she hadn't moved quick enough, she was tired and still holding back.
+</p>
+<p>
+    "Everything will die! I'll kill it all, mama!" Her adorable cackle carried over the torrent of wind and debris that swirled around, coming in closer and closer cutting off any chance or hope of a retreat that neither planned to make.
+</p>
+<p>
+    Bahiyya was beyond saviour and they both knew it, in their own way. Asai had been pushing this moment back for so long, telling herself lies to convince herself that she could do something to stop it from happening, but she knew. She'd always known, somehow.
+</p>
+<p>
+    Maybe that was the last little gift Saif and Yara had given her, some tiny little bit of their psychic power just to try and ready her for this moment. She'd never be ready, though. Even as her legs left the ground one last time, blood shooting out from a torn artery in her thigh and floating through the air like it was lost in the zero-g vacuum of space, she wasn't sure she could do it. Chunks of hair and skin shorn from her body along her back told her she wasn't ready, she was pulling punches even when it was down to 'do or die'.
+</p>
+<p>
+    "It's all red; I can make flames, Mama! I can make flames to burn it all away, all of it all of it burning!" Bahiyyah seemed to be screaming nonsense now as she threw attacks this way or that, only half-interested in watching her mother suffer any further. The voices in her head had grown too many, the ensuing auditory chaos imagined by her fractured little mind was confusing and distracting her all at once. Too many different ideas of chaos and desolation, how could she choose which would be the most fun? Better to try them all, one by one, she realized!
+</p>
+<p>
+    Her hands swirled around in circles as she pulled air particles together in rapid succession, then started to heat them up faster and faster and faster. Asai shifted into a hawk and flew up into the sky, soaring on the updraft the steadily growing fireball created and watched as her daughter threw and explosion at what remained of the dream-tomb. The ensuing backdraft and debris was like shrapnel, cutting holes in her feathers and flesh alike that sent her screeching in pain as she spiraled down.
+</p>
+<p>
+    With some considerable effort and skill she shifted in mid air turning herself back into a human and collapsing naked onto her knees, dirt across her dark brown flesh as she looked up and wept openly at her mad daughter whose eyes swirled the colors of northern lights.
+</p>
+<p>
+    "Maaaamaaaa~ It's your turn~" She giggled, extending a finger and starting to pull the air around Asai closer, pulling her with it. Winds began to pick up quickly and Asai dug her fingers in, felt them shifting into claws as she held back her transformation till the last second. Bahiyyah laughed as Asai pretended to lose strength and resolve, sobbing into her arm as her frail human body was twisted in the 300 MPH winds that kicked up in a split second, twisting and twirling about as she brought her forward so that she could slit her mothers throat herself. The winds began to collect debris, sharpening it in random places, preparing to skewer the woman that had birthed her.
+</p>
+<p>
+    Then, without any warning or ceremony, it stopped.
+</p>
+<p>
+    No more childlike laughter. No sound of wind ushered against the will of Gaia herself. Not even a cry of terror.
+</p>
+<p>
+    Just the sound of a wolf's growling as it tore the throat out of a young girl whose eyes bulged, her mouth moving with her hands in a desperate attempt to stop her attacker. Blood pooled up in her throat and coated her pretty white teeth red as her eyes looked about to pop out of their sockets, pain overwhelming her as her body began to shut down. Scrabbly little fingers digging into her mother's' flesh and fur stopped trying to pull away the wolf who shook it's head violently and snapped her neck with a satisfying crunch and crack. Springy locks of hair mottled with honeysuckle and dirt added blood into the mix as the wolf coughed over her, pulling up for air, and then went back down on her body to rip the mess of tendons and veins more totally to ensure decease.
+</p>
+<p>
+    She didn't stop until she could see the white meat and bone. Looking down at the terrifying hole in her daughter's' throat, she froze. Her mouth shifted to human, then her legs and hands and all the rest of her. She didn't know how to make any more tears, her eyes were swollen and red and the only thing she could see was her baby girl. Beautiful little Bahiyya. Saif's daughter. Yara's daughter. Asai's baby girl, now just a beautiful corpse.
+</p>
+<p>
+    Asai twisted her mouth open and let out the worst sound she'd ever heard a creature make, a sound of terror and complete desolation. The forlorn moan carried for miles and miles as she twisted her fingers around her poor baby's pretty hair and tried to twist it back to see her face clearly. She pushed her eyes closed only when she blinked for the first time in five whole minutes, then laid her down and collapsed over her, sobbing without tears or sound; she had no more to give.
+</p>
+<p>
+    "FUCK YOUUUUUUUUU!" She screamed, choking on the words as spit and drool poured down over her tongue and lips, snot oozing from her little pug nose and mixing with blood pool under the two figures. "I hate you, you fucking bitch! I'm so glad! I'm so fucking glad you and your bastard brother are dead!" She howled and slammed her fist on the ground, screaming on a register not available to normal humans.
+</p>
+<p>
+    Her body shifted forms at random, anything that was big and strong and powerful. She lashed out, she thrust and punched and kicked and worked a storm of dirt and dust that rivaled the tornadoes of wild power her daughter had whipped around in the rubble.
+</p>
+<p>
+    She lifted herself up and wiped a hand over her face smearing Bahiyya's blood across her eyes and mouth, lips trembling as she looked at her precious corpse one last time. She almost looked like she was asleep; her hand went out to touch her hair and she felt an urge to try and row it again.
+</p>
+<p>
+    Maybe this time she could plait it up properly without hurting her, and she could look cute and smile up at her mama with those big bright teeth and those cute eyes that looked just like Saif and Yara's eyes.
+</p>
+<p>
+    Asai pushed the body away, pushed it over onto it's face so the dirt could admire her beauty - she turned away, and she ran.
+</p>
+<p>
+    Running was what she was best at, she told herself.
+</p>
+<p>
+    If she'd just run none of this had to happen. She could have killed herself when she had the nerve to, could have let that horrible man Saif and his even more horrible sister kill each other like they'd always been destined to. Could have let the whole fucking world burn in the aftermath instead of just a chunk of it. Maybe that was the future Bahiyya saw and became so obsessed with. It was stupid to think she could correct whatever genetic defect had corrupted Saif's seed and that of their father, that her blood could somehow counteract whatever terrifying disease their mother bore in her own bloodstream and passed onto her goblinesque children.
+</p>
+<p>
+    Asai smiled for the last time as she realized Saif had been right all up to this moment. She had been a 'stupid little monkey' and been too busy playing human to realize it.
+</p>
+<p>
+    She curled up into a ball by a stream somewhere in the woods. She probably could have recognized and figured out where she was to find a way home if she wanted, but she didn't. She had no home without Bahiyya to go back to.
+</p>
+<p>
+    She looked up into the sky as the setting sun made god rays through the canopy, bright yellowish orange beams of light cutting down between tree trunks and washing the land over with it's natural brilliance. She sighed and pulled one last handful of water up over her breasts shuddering as the cold water washed the last bit of her daughter's blood downstream. Her thigh burned but it was a pain on the back of her mind. She wasn't present enough to feel it, really.
+</p>
+<p>
+    Slowly her nose began to sink into her face, eyes going small and dark as the mess of matted nappy hair on her head retracted and sank into her bald skull. Her dark brown flesh and freckles went pale and vaguely yellowish as she began to shrink, fingers curling into a fist that became the foot and claws of a tortoise. Slowly the young woman disappeared and was replaced with something that looked sad and ancient, but somehow content with it's position too. Asai didn't even bother to look back over her shoulder one last time.
+</p>
+<p>
+    There was nothing left for her in her old life.
+</p>
+<p>
+    Bahiyya had gotten her wish
+</p>
+<p>
+    Asai was gone.
+</p>
+
+<hr>
+
+<!-- CHAPTER 9 -->
+<h2 id="ch9">9</h2>
+
+<p>
+    Yara stared blankly at Asai as she stood alone in the desolation that followed the explosion of her power. Asai had shifted from a mouse to an ostrich, goose stepping towards her friend with the delicate care of someone trespassing into a mother bear's cave. She'd called out to Yara for nearly an hour across the wide open field of complete nothingness, all without any answer from the solitary feminine figure standing dead center to it all.
+</p>
+<p>
+    Yara turned her head up slightly and looked at Asai more clearly once she was within dashing distance to her. Saying nothing she sullenly looked down at her bare feet and wriggled her toes in the dirt, watching the gray ash of hundreds of infant aliens gather up between them and then stomping them up into the air violently like she was performing some ancient tribal dance.
+</p>
+<p>
+    "Yara?" Asai whispered again as she slowly turned back to her human form - naked as the day she was born, all her bruises and cuts healed through the transformation so that her flawless dark chocolate coloured skin shined prettily in contrast to the dull gray covering Yara's flesh.
+</p>
+<p>
+    Asai looked around quickly at what there was to look at; Yara stood alone in just her tights, her shirt in tatters that hung from her gray but otherwise pretty shoulders and chest. There was no sign of anything else, though. Not even Saif's corpse. "Yara, I-"
+</p>
+<p>
+    "Come here, Asai."
+</p>
+<p>
+    The girl froze up. Yara sounded different than she'd ever heard her sound before. It reminded her of Weston or Steve and the way they spoke to one another whenever they had had any reason to do so. It was... adult.
+</p>
+<p>
+    Asai slowly approached Yara with her shoulders hunched, leaning down and forward like a golem while she raised her eyes up like a frightened puppy who knew it had done something wrong. Yara still looked just as sullen and disappointed as ever, raising a single finger up to her lips ordering the girl to be quiet as she turned around and knelt in the ash and dirt.
+</p>
+<p>
+    Reaching up into her hair she pulled out one of the beautiful flower blossoms that stayed permanently alive until plucked free - this one seemed to remain vibrant even as it was cut loose of the fibre strand that was keeping it alive, however. Beautiful orange and purple leaves flickering sparks of moonlight somehow as she placed it down onto a little bed of ash and dirt she gathered with her soft hands. Yara shoveled still more on top of her little plantling flower and closed her eyes - almost immediately Asai felt Yara kill the air around them and she gasped as she felt her lungs being emptied painfully. She started to cry out, begging Yara not to hurt her, when she felt the sensation reverse itself just as quickly as it had happened and her lungs were filled again.
+</p>
+<p>
+    She clutched at her throat and tried to pull away a collar she wasn't wearing, distracted by the uncomfortable sensation until she felt Yara pat her knee for attention. She looked down and--
+</p>
+<p>
+    There in the dirt was a sprout. She couldn't tell what kind to look at it, it seemed just a generic little green stalk with two tiny green leaves, but it was a sprout to be certain. "How?" She asked silently once her voice was restored by Yara's spell.
+</p>
+<p>
+    "Saif taught me." Yara muttered softly as she pushed away from the dirt around her sprout, falling backwards onto her rump and letting out a "HUFF!" from somewhere in her lungs. She looked back over her shoulder at Asai, looked like she wanted to smile but couldn't, and made a jerking move with her head ordering the girl to come around.
+</p>
+<p>
+    Asai skittered forward on shaking knees and stood at her side, hands over her breasts for some bit of modesty, and waited.
+</p>
+<p>
+    "I don't want to kill anything else." Yara muttered silently as she reached up and placed her hand on Asai's stomach, rubbing it gently, tracing her soft brown fingers against Asai's navel. Asai recoiled a bit and started to laugh on reflex but Yara kept her close enough to touch and didn't let her pull away.
+</p>
+<p>
+    "I don't want to see anyone else die." Yara whispered as she leaned in and placed her cheek against Asai's belly, stroking her face against her skin slowly as she started to cry. Asai wanted to cry too, she wasn't entirely sure why but the tears were building up quicker and quicker. She felt funny, too - when Yara touched her she didn't feel like there was a knife playing on her skin like it usually did, it was more like she was lighting a fire inside her somewhere. She felt something warming up inside of her and got frightened, started trying to push away again as she imagined her inside being turned into ash and her whole body disintegrated from the inside out slowly.
+</p>
+<p>
+    Yara held on tighter, placed her face against Asai's pelvis and pushed harder, pressing against her, pushing into her. Asai let out a squeal and tried to get away again as she felt her body getting hotter. She felt feverish, and as the fever burned and raged she started to feel nauseous and sick. In seconds she felt the urge to vomit and clasped a hand over her mouth before she finally was able to break free, rushing away a few wobbling footfalls back to heave the contents of her stomach out onto the ground. A violent headache wiped all the thoughts out of her head as she puked her guts onto the ash; wiping her lips on her arm she turned back around to see Yara lying there with her body curled around the little plantling, cradling it protectively.
+</p>
+<p>
+    She wasn't beautiful any longer, not in the way she always had been before. She looked like the living dead. She was dying.
+</p>
+<p>
+    "Yara!" She shouted trying to rush over to help her, stopping short and falling face first as she threw up again. She coughed and didn't bother to wipe her mouth this time because Yara seemed even more shriveled when she looked up again. She dragged herself beside her friend and put a hand on her sunken cheek and a finger to her neck looking for a pulse that wasn't there.
+</p>
+<p>
+    Yara smiled and turned her eye towards Asai, whispering:
+</p>
+<p>
+    "I couldn't give Saif a baby, you know. He tricked me... into destroying my insides, a long time ago. I think he was scared of me," Yara giggled weakly and heaved for air, struggling to suck it into her chest with muscles that were atrophying quicker than they could keep her alive. "I felt horrible because I couldn't, but I knew why."
+</p>
+<p>
+    Yara grinned cruelly and stuck her tongue out at Asai.
+</p>
+<p>
+    "Take care of your little girl, Asai. Give her a cute name."
+</p>
+<p>
+    Asai was standing alone next to a little sprout, sick as a dog with a belly that didn't feel right. Confused, sick, and alone, she turned and started to walk home.
+</p>
+
+<hr>
+
+<!-- CHAPTER 10 -->
+<h2 id="ch10">10</h2>
+
+<p>
+    "You can't stay a turtle forever, Asai."
+</p>
+<p>
+    <i>Tortoise. And yes I can.</i>
+</p>
+<p>
+    "What about your pretty hair? It was so cute when you plaited it up and tied it; or just comb it at all maybe?"
+</p>
+<p>
+    <i>Leave me alone, please, I'm eating.</i>
+</p>
+<p>
+    Yara frowned and put her hands on those impossibly curvy, wide hips of hers, wrapped up in the sweatpants Saif always made her wear standing underneath the hanging branches of <i>their</i> willow tree. Asai barely looked up at her from the bit of greenery she'd been chewing on out of some animal necessity that she gave herself up to. She didn't know how long she'd been eating. She didn't care. Time stopped mattering; living stopped mattering. She'd died years and years and years ago.
+</p>
+<p>
+    "<i>Yara is right, turn back into a monkey and eat a banana or something you dumb little cunt."</i>
+</p>
+<p>
+    That time Asai did look up. Saif was standing there behind Yara, doing <i>what</i> she didn't want to imagine at. He was shirtless and tying his long dreadlocks up behind his head into a standing ponytail the way he liked to do. No hole in his chest, no wounds whatsoever. Bright tanned skin and muscle, as beautiful and handsome as he had ever been before.
+</p>
+<p>
+    Asai started to make words but she forgot how - this had to be some kind of waking nightmare because she couldn't remember the last time she'd slept.
+</p>
+<p>
+    "<i>You're not dreaming, and you're not dead, Monkey." Spoke the handsome man standing with his arms wrapped around his sister who beamed up at him a goofy smile before she began to smother his chin and cheeks with happy, girlish kisses. "You didn't do all of what I told you to do, Asai, but... you did okay."</i>
+</p>
+<p>
+    Asai started to speak again as she felt anger welling up inside of her - this was all his fault after all, all it. He was the reason Bahiyyah was dead, him and his bitch sister -- but she couldn't make the words come out. She felt paralyzed. It was like something out of a cheesy novel, the terrible paperback ones she used to read - she dreaded the thought of her daughter's' ghost appearing beside them to taunt her even more.
+</p>
+<p>
+    "<i>She's not going to show herself." The man said plainly as he laid down against the willow tree's bough, his sister sliding down between his legs and leaning against his chest humming while she picked the petals of flowers out of her hair. His arm hung lazily around her shoulder, stroking and petting her, and she seemed content as a little dog with how he touched her. "But you'll see her again, Asai. I promised you I would make it up to you if you did what I asked. We're not really ghosts, just echoes, I guess. Phoebe can explain it if you really care. I can't do much of anything now - I don't have a brain to focus my abilities; neither does Yaya."</i>
+</p>
+<p>
+    <i>His sister looked up and shook her head sadly without letting her smile fade for a second, nor looking over at Asai. She was completely absorbed in her brother, doting on him.</i>
+</p>
+<p>
+    "<i>Yaya told me what she did for you. I'm really glad she learned how to do that finally, even if I could only teach her by... you know." He smiled sadly at the dumbfounded tortoise-girl, leaning in to kiss his sister on the forehead. She squealed with delight and seemed to melt all over him, like some kind of slime being, but she congealed back into his arms and started kissing him all over again instead.</i>
+</p>
+<p>
+    "<i>So I'm going to do what I can for you, with a little bit of Yaya's help. I can't make you forget what you did, or take the pain away."</i> Asai wanted to scream at him, wanted to run up and cut him into tiny tiny pieces for making her remember that again, and when she found she couldn't move a solitary micro-inch towards him she tried fruitlessly to bite her own tongue out of her head to end the suffering she was feeling. If she couldn't kill him she wanted her own death all over again. <i>"I'm sorry, that's just how it has to be. But I'm going to do the next best thing I can."</i>
+</p>
+<p>
+    Yara looked down from Saif and grinned wide, waving at Asai with the exuberance of a little girl. "Your daughter is really, really cute, Asai! Make sure to give her lots of kisses!"
+</p>
+<p>
+    Asai shuddered awake and tried to scream but couldn't. Her skin was sopping wet, so was her fur bedding. She jumped up and looked around - she was in a tent and it was cold but she was sweating so profusely that when she realized just how cold it was she shivered like she'd been dunked in ice water. She felt around herself - no shell, no leathery skin, no beak...
+</p>
+<p>
+    She was human, she was in a bed, and outside of the plain white tent she saw the shadows of two people dancing against the fabric as a fire blazed not too far away.
+</p>
+<p>
+    One seemed to have horns on its head, three of them standing on end with flat stalks as the figure hunched forward in some sort of chair and let out a low laughing sound.
+</p>
+<p>
+    The other was smaller, head surrounded by weird little springs that bounced up and down as it moved this way or that, arms waving about emphatically as they told a story of some sort. A vaguely familiar voice accompanied by one that hurt Asai in ways she didn't know she could feel pain.
+</p>
+<p>
+    <i>I should lay down and go back to sleep. This is another night terror.</i> She said inwardly as she kicked herself up and crawled slowly towards the flap of the tent.
+</p>
+<p>
+    Just a few more handprints further and she'd see it was just the light playing off of trees, her broken mind inventing new methods of torture to punish her crimes against nature and the order of things. Her whole body was shaking for fear even as she rationalized what she was seeing. Hearing. Collapsing down so that she had to drag her breast through the dirt to peek her head out of the tent to see
+</p>
+<p>
+    Phoebe turned and looked down at Asai's tear and snot covered face, smirking and rolling the empty sockets of her eyes up to the sky as she motioned her to come outside. Her face said a lot of things without saying a word, whispering some of it into her head to answer a thousand questions in a thousandth of a second. She had on her plain ugly robes, and her wheelchair was sitting next to the log she was resting on beside the roaring fire they had made.
+</p>
+<p>
+    Asai closed her eyes and wept into the dirt, sobbing loudly until she felt the delicate touch of a small hand on patting her on the face like a hungry kitten.
+</p>
+<p>
+    "Mama? You okay?"
+</p>
+<p>
+    A sad smile crept up little Asai's face and she replied:
+</p>
+
+<hr>
+
+<!-- Back to top link -->
+<div class="back-top-container">
+  <a href="#top">↑ Back to top</a>
+</div>
+
+<!-- Return link -->
+<div class="return-link">
+  <p><a href="../writing.html">back</a></p>
+</div>
+
+</body>
+</html>

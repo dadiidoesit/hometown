@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>continuance · a fragment</title>
+<style>
+  /* 
+    A restrained typesetting style inspired by Project Gutenberg’s 
+    basic HTML editions — plain, readable, gently classical.
+    No webfonts are imported; the design relies on the reader’s 
+    familiar serif stack and a calm, single‑column rhythm.
+  */
+  html {
+    font-size: 100%;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    max-width: 36em;          /* a comfortable measure for literary text */
+    margin: 2.5em auto;
+    padding: 0 1.2em;
+    font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+    font-weight: 400;
+    line-height: 1.65;
+    color: #1a1a1a;
+    background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
+    word-spacing: 0.05em;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Headings are not used in the original template, but this ensures 
+     any future additions follow the same classical spirit. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: "Georgia", "Times New Roman", serif;
+    font-weight: 600;
+    line-height: 1.35;
+    margin-top: 2.2em;
+    margin-bottom: 0.6em;
+    letter-spacing: 0.02em;
+    color: #222;
+  }
+
+  p {
+    margin: 0 0 1.25em 0;
+    text-align: justify;      /* Gutenberg often uses justified text */
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
+    orphans: 2;
+    widows: 2;
+  }
+
+  /* The byline / meta line: delicate, spaced, slightly smaller */
+  .meta-line {
+    font-size: 0.95rem;
+    margin-top: 0.6em;
+    margin-bottom: 2.8em;
+    letter-spacing: 0.04em;
+    word-spacing: 0.12em;
+    color: #2c2c2c;
+    text-align: left;
+    line-height: 1.6;
+    font-style: normal;
+  }
+  .meta-line br {
+    display: block;
+    content: "";
+    margin-top: 0.25em;
+  }
+
+  /* 
+    Horizontal rules become delicate, classical dividers — 
+    reminiscent of a typographic fleuron or simple space, 
+    not a heavy browser default line.
+  */
+  hr {
+    display: block;
+    border: none;
+    height: 1px;
+    background: #9b8c7c;
+    background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+    margin: 2.8em 0 2.5em 0;
+    width: 100%;
+    opacity: 0.65;
+  }
+
+  /* Optional subtle first‑paragraph treatment — Gutenberg occasionally 
+     uses a small lead‑in. We keep it very light and optional. */
+  .first-paragraph {
+    text-indent: 0;
+  }
+  /* Following paragraphs receive a classic indent, 
+     mimicking traditional book typography. */
+  p + p {
+    text-indent: 1.6em;
+  }
+
+  /* The closing navigation link — simple, centred, modest */
+  .return-link {
+    text-align: center;
+    margin-top: 2.4em;
+    margin-bottom: 1.8em;
+  }
+  .return-link a {
+    text-decoration: none;
+    color: #4b3b2b;
+    border-bottom: 1px dotted #b7a48b;
+    font-size: 0.95rem;
+    letter-spacing: 0.03em;
+    padding-bottom: 0.1em;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .return-link a:hover {
+    color: #1a1a1a;
+    border-bottom-color: #7b6e5a;
+  }
+
+  /* Very small screen refinement */
+  @media (max-width: 480px) {
+    body {
+      margin: 1.8em auto;
+      padding: 0 1em;
+      font-size: 0.95rem;
+    }
+    p {
+      text-align: justify;
+      hyphens: auto;
+    }
+    hr {
+      margin: 2.2em 0 2em 0;
+    }
+  }
+
+  /* Preserve the original semantic structure; 
+     no extra classes required beyond what’s below. */
+</style>
+</head>
+<body>
+
+<!-- The title and meta note, styled as a simple classical byline -->
+<p class="meta-line">
+  Devils Oath<br>
+  06.21<br>
+  wip. posted as‑is. a devil prince, chosen by his god, is put to the test. will he chose justice or pleasure as the guiding philosophy for his life?
+</p>
+
+<hr>
+
+<nav class="toc-nav" aria-label="Contents">
+    <p>
+        <span class="nav-label">Contents</span> <a href="#ch1">Chapter I</a> <a class="back-top-link" href="#top">↑ Back to top</a>
+    </p>
+</nav>
+<p class="meta-line">
+    <br>
+    <br>
+    &nbsp;
+</p>
+<hr>
+<h1 class="western" style="text-align:center;">
+    <span style="font-family:Garamond, serif;"><strong>THE DEVIL’S OATH</strong></span>
+</h1>
+<h3 class="western" style="text-align:center;">
+    <span style="font-family:Garamond, serif;"><i>Book One — As Set Down by Auric el-Amin Pocates</i></span>
+</h3>
+<p style="line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;"><i>This is the account as I remember it — and memory, I’ve learned, is its own kind of liar, dressing old wounds in better light than they deserved at the time. I will tell it as plainly as a prophet of AGA is permitted to tell anything. Where my own eyes did not see a thing, I have said so, and told you instead how I came to know it. The rest, I lived.</i></font></span>
+</p>
+<p style="line-height:1;margin-bottom:0.14in;margin-top:0.08in;text-align:center;">
+    • • •
+</p>
+<h2 style="line-height:1;text-align:center;" ch1";"="">
+    I
+</h2>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The blood moon was at its apex in the sky, having risen higher with each passing night since the return of one of my scouts. The lot had been sent north nearly a fortnight before with only one reporting back. Standing on the balcony of my sleeping quarters, I watched the shimmering orange orb stare down at me, each dark crater seeming to my spiritual eye that the life-giving orb was judging the whole of my kingdom. The spire-peaks of the mountains created a sheer horizon line against the setting sun, so that as it glowed its radiant gold it made visible the shimmer of heat off the land, even from great distance, and the sky looked like liquid where it met the edge of the world. These vivid, soupy, blood moons are seen only in Taburh; for AGA, blessed be her name, once tricked each of her siblings into leading their followers into a deep chasm of the world, and ground them into a mash of colors that paint the moon and sun, and the strokes upon her canvas are clearest at the seat of the world from which she painted.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">It is an omen of dark times when the moon rises more crimson than the night before. This was the fourth night running that a red moon bathed my lands in gold and scarlet, and worry was beginning to crowd out my better senses.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Prophet.” A priestess lieutenant, Evangeline Lu-hash, bowed deeply as she entered my chambers without sound. She knelt low before the bay windows that opened onto the balcony, and did not look up as I turned my head to acknowledge her. With a quick turn, I strode back inside to drape my fur cloak over my naked form, before I instructed her to rise.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">We have extracted the report from the scout, and he confirms what the knights suspected; he was killed by poison arrows,” she reported.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">What was his name?”</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Rongrim, sir.”</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I ground my teeth against each other, and already my left hand had moved to stroke the lower set of horns rising out from the tangled mess of my hair. Were the northern folk planning to break our borders so soon, or had Rongrim simply overestimated himself and been caught skulking in the wilds beyond the rock deserts? Evangeline seemed to anticipate the turn of my thoughts, and that is one of the many reasons I had seen to it that she would rise through priesthood despite her age. She cleared her throat for leave to continue and I waved her on with a flick of my fingertips.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">If you’ll allow me, I believe we should not act on this before the revolutionaries conclude their business in the city. Our surviving spies among the Erantir rebels believe this is a test, and they will make some moves against the city before the treaty is signed. At your word, I’ll have the scout’s body hidden in the catacombs until the procession has departed.”</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">This fell in line with my own thoughts and divination, so I gave a wave of agreement without much hesitation. Turning back toward the open balcony now, the red moonlight washed over my scarlet skin and warmed me wonderfully.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">See that the Grand Cathedral is ready for their arrival. I want every soldier we can spare from Minerva on alert around the city.” I decreed this as I passed by her to the door. “Have the criers go through the streets — tell the people that AGA has spoken, and a portion of all food stores, however small, must be set aside for our peace offering to our new neighbors in the south.”</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I could hear in the silence Evangeline’s every thought withheld; her personal opinions on taking more from a people already gutted by famine, her people, who could barely scrape together tithe in such hard seasons. I didn’t turn to soften it, or to explain myself. A few seconds passed before she pressed the medallion around her neck to her brow, then bowed low to the marble floor in supplication to the Mouth and Beating-Heart of AGA. Wordless for the shame she now carried which radiated from her countenance just as the setting sun behind me, she retreated from my quarters.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Those closest to me understood, even when they hated it, my belief that there would be no hope for Taburh against our enemies to the North if we did not buy allies somewhere, and the collapse of our farms and our forests and the migration of herds, had left us with precious little else to barter with but our dwindling stores of grains and dried things.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The following morning, I stood on the balcony overlooking Taburh gazing down upon the crown jewel of the nation. The palace sat far enough back from the gaping mouth of the volcano, and the Grand Cathedral hovering at its center whose tall steeple framed the heart of the city like a painting. This was all to the benefit of my senses, as was my right as AGA’s chosen prophet, the Tongue and Mouth of God. This city never possessed the slick intentional design of the southern provinces in how its roads and its field grids had been laid out.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Rows of squat single-story homes built in alternating heights made it so the skyline rippled like the ocean caught mid-wave, immortalized by statue. Sandstone and concrete in tans and pale salmon, whose rectangles had been erected with no consistency to their height, hung everywhere with green fabric and the decorative furs traded up from the coast, marking out streets and districts like banners.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">All seven of my nameless handmaids stood behind me, braiding my hair down the sides and back of my scalp while I reclined. My eyes drifted back and forth as I watched the common folk move below like ants about their work. To the west, the Greeters had already gathered with their bright green and yellow flags, waiting to lead the formal procession in from the gates.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Dozens of young tiefling and human children in their finest wool were set to bring this drow rebel, Morggan, before me.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I knew there would be little work done this day that was not done by my own hand, or by those bound directly to the Ministers, the Apostles, and the Lesser Prophets. Drow had not walked the streets of Taburh in three hundred years, let alone the surface land beneath the sun.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I hissed and cut my eyes at the girl tugging clumsily at my hair on my right; she begged pardon when she realized where my attention had fallen, and went back to threading beads onto my long brown locks. It would be a long, tiresome day. I could tell that much already.</font></span>
+</p>
+<p style="line-height:1;margin-bottom:0.14in;margin-top:0.08in;text-align:center;">
+    • • •
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I would not learn the truth of it until much later, pieced together from whispers among my priest-lieutenants, and eventually from the drowess’ own tongue; on those nights I stood watching the moon climb higher, the Lady Regent of Erantir was being dragged from her own bed by a cohort of her slaves who had procured explosives by some means, most likely trading with the duegar, and took her unawares in the night. A coup within her own house. Her guard captain – His name was Grinn, and they were lovers in the way the Drow are capable of love (which is to say, with too little passion and lusts too great), had barred the door to her bedchambers. Those doors, she claimed, had withstood numerous other assaults for over a hundred years, but her former slaves had procured explosives somehow, most likely gnomes or duegar, with no regard for the right way of doing things. Grinm had been the first to die upon breach of his matron’s chamber, and then she was taken.&nbsp;</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I knew none of this on the morning her captors delivered her to my gates. I knew only that some self-styled new ruler in the south had sent word ahead that he meant to arrive bearing “a gift,” and that he wished an audience to settle, at last, the matter of a treaty long overdue.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The last mile, climbing the rocky hill-path to Taburh was the roughest. I would learn afterward that she was transported still dressed in the ruined silks she’d been wearing the night they took her, surrounded the whole way by men who had once knelt to her and now wouldn’t meet her eyes. By account of my scouts, one of them, a retainer of some minor house, apparently spent that final stretch of road arguing that they ought to simply poison her quietly and ride home claiming a rescue, rather than go through with handing her to a kingdom that had hated hers for three centuries. Morggan had struck his former mistress himself more than once for nothing more than looking at him with too much of her old crown still in her eyes.</font></span>&nbsp;
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">I think now that he was still deathly afraid of her, despite being bound and starved and bruised as she was. In time I came to understand that everyone who crossed her path eventually was terrified of this woman. Though it would take me considerably longer than it took him to admit it to another living soul.</font></span>
+</p>
+<p style="line-height:1;margin-bottom:0.14in;margin-top:0.08in;text-align:center;">
+    • • •
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">There is no sound more joyous and delightful than that of children at play,” I remarked to the surrounding company. My gaze beamed like a bullseye lantern in whichever direction my eyes happened to drift, and my attention made that space glow. I floated through the city streets atop my litter with the Hands of the Church flanking my procession on either side. Tiefling and human children bounced along ahead of us to the tune of my trumpeters; so much squealing and waving and each disparate soul desperate for some acknowledgment to spotlight them for a moment among their fellows. I let myself enjoy their revelry from the safe distance of my carriage walls, smiling and lifting a hand now and then, so long as none of them strayed close enough to the front of the train to trip the legionnaires bearing me forward.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The Hand does not walk among the people openly so often, and so a day like this one was nearly a holiday in itself. Close enough that bakers might leave their ovens and shepherds their flocks, and for just an afternoon no one would think less of them for it. My appearance anywhere beyond my own citadel was an occasion people would remember for years, though I doubted most of those calling out blessings to me that morning knew half of what had actually brought me out. This was a chance to be noticed by AGA, blessed with the knowledge of their existence.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The other prophets were left at the gates to the cathedral bridge to ready themselves, while I was taken into the Cathedral proper to be re-dressed in the ceremonial garb of diplomacy. Once secured in my quarters, my colorful dress was stripped away piece by piece in privacy. Then I was bound back up in livery that was monotone: silver and white, with gold and red trim down to the draping skirts that trailed behind me, lengths of knotted mithril cord hanging from my waist and shoulders, ending in cowrie shells gathered from the Hellfire Coasts. My hair was unbraided in front and left to fall over my brow, the rest pulled back and tucked into my collar on either side, framing my stoic, hard features in a more dramatic way. A light dusting of dragon’s root powder and hellsbane around my eyes made them seem like they glowed even in the dark and dusk.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The whole transport and preparation had taken nearly two hours to complete, during which I had no choice but to wait while my handmaids did their work. This was tradition, and it had been like this since I was a child. I’d known enough history as a child to feel as if I could call back to a time when the people of Taburh were cruel animals of conquest and violence. I would have liked, instead, to be on the walls with my lesser prophets, watching the diplomatic party arrive from above — to glower down at them with my pikemen and bowmen ready, at least four score, to put a knife-ear to the sword at the slightest show of disrespect. One false step and open war would have been all but inevitable, but I knew we could win such a war against their weakened governance, and I did not fear them. While the old Regency still held, perhaps they could survive an assault, but now, with their lands no longer unified, they had made themselves vulnerable.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">Alas. If not for this damnable famine, their lands would belong to AGA already and Taburh would have rejoiced as hellfire rained down and consumed their pitiable souls.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">When I was finally dressed from head to toe, and feeling some twenty pounds heavier for it, I strode into the massive cathedral halls and took my place behind the podium, looking out over dozens upon dozens of empty pews as colored light filtered through the stained glass. The sun no longer stood behind the cathedral at that hour, and so no light fell through to illuminate the depiction of AGA the architect had carved there several hundred years before. I have often wondered whether she caught the same pushback for her vision of our god that any artist would catch today.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    <span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">The Lesser Prophets led the diplomatic party filing in falling to a three-file line shoulder to shoulder and taking seat at their individual small pulpits along the farthest sides of the hall. From left and right there were Aramais. Kairi. Rael. K’kesh. Solemn and silent as the guests of AGA led entrance to this self-proclaimed king who had come with gifts, seeking my favor and support. Looking at him I remember, I felt my stomach turn. I could tell low-class when I saw it, even from across a cathedral.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">To the heavens, may your shadows find peace.” I let the words boom out, my voice carrying louder and with far more bass than my speaking voice otherwise had: A little magic for show for tradition and theatrics. I inclined my head, formally accepting this troupe of heathens into so holy a place.</font></span>
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    &nbsp;
+</p>
+<p style="font-style:normal;line-height:150%;margin-bottom:0.14in;" align="left">
+    “<span style="font-family:Garamond, serif;font-size:medium;"><font style="font-size:12pt;">You stand before the <strong>Mouthpiece </strong>of <strong>AGA,</strong><span style="font-weight:normal;"> whose teeth gnash at you; </span><strong>AGA’s </strong>hands clench before you; AGA’s feet stamp toward you. The<strong> Mouth </strong>who draws AGA’s breath<strong> speaks</strong><span style="font-weight:normal;"> to welcome you</span>. <strong>You </strong>may now speak by the will and mercy of <strong>AGA</strong>.” I inclined my head once more. Each of my Lesser Prophets mirrored the gesture one at a time.</font></span>
+</p>
+<p>
+    &nbsp;
+</p>
+<hr>
+<div class="back-top-container">
+    <a href="#top">↑ Back to top</a>
+</div>
+<div class="return-link">
+    <p>
+        <a href="../writing.html">back</a>
+    </p>
+</div>
+
+<!-- 
+  The template remains intentionally light and semantic.
+  It uses no unnecessary classes beyond the meta line and return link,
+  keeping the markup close to your original vision while adopting
+  a classical, Gutenberg‑inspired visual cadence.
+-->
+</body>
+</html>
+```
