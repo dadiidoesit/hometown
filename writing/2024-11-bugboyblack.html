@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>buggaboy bartlebee jones · a fragment</title>
+  <style>
+    /* 
+      A restrained typesetting style inspired by Project Gutenberg's 
+      basic HTML editions — plain, readable, gently classical.
+      Extended with a sticky table of contents and a back‑to‑top link.
+    */
+    html {
+      font-size: 100%;
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+    body {
+      max-width: 36em;          /* a comfortable measure for literary text */
+      margin: 2.5em auto;
+      padding: 0 1.2em;
+      font-family: "Georgia", "Palatino Linotype", "Book Antiqua", "Palatino", serif;
+      font-weight: 400;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background-color: #fdfdf8; /* slightly warm paper tone, quiet and soft */
+      word-spacing: 0.05em;
+      letter-spacing: 0.01em;
+      text-rendering: optimizeLegibility;
+      position: relative;
+    }
+
+    /* Fixed/sticky navigation bar */
+    .toc-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #fdfdf8;
+      border-bottom: 1px solid #c4b6a6;
+      padding: 0.6em 1.2em 0.4em 1.2em;
+      margin: -2.5em -1.2em 1.8em -1.2em;
+      font-size: 0.9rem;
+      letter-spacing: 0.03em;
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.5em 1.2em;
+    }
+    .toc-nav a {
+      color: #4b3b2b;
+      text-decoration: none;
+      border-bottom: 1px dotted #b7a48b;
+      padding-bottom: 0.1em;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .toc-nav a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+    .toc-nav .nav-label {
+      color: #6b5a4a;
+      font-style: italic;
+      margin-right: 0.2em;
+    }
+    .toc-nav .nav-spacer {
+      flex: 1;
+    }
+    .toc-nav .back-top-link {
+      font-size: 0.85rem;
+    }
+
+    /* Headings */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-weight: 600;
+      line-height: 1.35;
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+
+    /* Override heading margins for chapter headings to match Gutenberg style */
+    h2 {
+      margin-top: 2.2em;
+      margin-bottom: 0.6em;
+    }
+
+    p {
+      margin: 0 0 1.25em 0;
+      text-align: justify;      /* Gutenberg often uses justified text */
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      -ms-hyphens: auto;
+      orphans: 2;
+      widows: 2;
+    }
+
+    /* first paragraph after heading no indent */
+    h2 + p,
+    .first-paragraph {
+      text-indent: 0;
+    }
+    /* following paragraphs indented */
+    p + p {
+      text-indent: 1.6em;
+    }
+
+    /* horizontal rules */
+    hr {
+      display: block;
+      border: none;
+      height: 1px;
+      background: #9b8c7c;
+      background: linear-gradient(to right, #c4b6a6, #8b7b6b, #c4b6a6);
+      margin: 2.8em 0 2.5em 0;
+      width: 100%;
+      opacity: 0.65;
+    }
+
+    /* meta‑line (title / byline) */
+    .meta-line {
+      font-size: 0.95rem;
+      margin-top: 0.6em;
+      margin-bottom: 2.8em;
+      letter-spacing: 0.04em;
+      word-spacing: 0.12em;
+      color: #2c2c2c;
+      text-align: left;
+      line-height: 1.6;
+      font-style: normal;
+    }
+    .meta-line br {
+      display: block;
+      content: "";
+      margin-top: 0.25em;
+    }
+
+    /* back‑to‑top container */
+    .back-top-container {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .back-top-container a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .back-top-container a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* return link */
+    .return-link {
+      text-align: center;
+      margin-top: 2.4em;
+      margin-bottom: 1.8em;
+    }
+    .return-link a {
+      text-decoration: none;
+      color: #4b3b2b;
+      border-bottom: 1px dotted #b7a48b;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      padding-bottom: 0.1em;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .return-link a:hover {
+      color: #1a1a1a;
+      border-bottom-color: #7b6e5a;
+    }
+
+    /* small screen */
+    @media (max-width: 480px) {
+      body {
+        margin: 1.8em auto;
+        padding: 0 1em;
+        font-size: 0.95rem;
+      }
+      .toc-nav {
+        padding: 0.4em 0.8em;
+        margin: -1.8em -1em 1.5em -1em;
+        padding-left: 0.8em;
+        padding-right: 0.8em;
+        font-size: 0.8rem;
+        flex-wrap: wrap;
+      }
+      .toc-nav .nav-spacer {
+        display: none;
+      }
+      hr {
+        margin: 2.2em 0 2em 0;
+      }
+    }
+
+    /* top anchor */
+    #top {
+      position: absolute;
+      top: -3em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- invisible anchor for top -->
+<a id="top"></a>
+
+<!-- Sticky table of contents / navigation -->
+<nav class="toc-nav" aria-label="Contents">
+  <span class="nav-label">Contents</span>
+  <a href="#ch1">1</a>
+  <a href="#ch2">2</a>
+  <span class="nav-spacer"></span>
+  <a href="#top" class="back-top-link">↑ Back to top</a>
+</nav>
+
+<!-- Title / byline -->
+<p class="meta-line">
+  buggaboy bartlebee jones<br>
+  a fragment
+</p>
+
+<hr>
+
+<!-- CHAPTER 1 -->
+<h2 id="ch1">1</h2>
+
+<p>
+    Dark days were upon the region of winterhollow ever since the first snows were missed. That influx of moisture - storable moisture - was the lifeblood of the community. How would the old ones survive the double season if they could only molt the once, and then whither and die while the fungal farms suffer marking doom for all the rest? There was no refuge in such thoughts. Push them aside and return to your work, and suffer in silence with the sword of damocles hanging over your head every morning when the moisture rations become more and more modest. Why take notice of it when you could buy perfectly good alcohol once your labor was over?
+</p>
+<p>
+    A hand-raised glass swings a flourished arc through the air, and its golden contents race around the inside loop of the mouth accompanied by the impromptu advertisement: “A drink for all ages; the ripest swill that you can find this side of underheap.”
+</p>
+<p>
+    Black paused, reconsidering if he was really going to finish this last drop. His stomach would resent him in the morning for the indulgence of his tongue, but it seemed like a price worth paying. Whether he poisoned himself recreationally or not, an arn would still pass and he would still have a trainee to work at dawn. Training to take HIS position, the thing he was the best at, like he had studied all those arns with the most demanding teacher imaginable. He must have been scowling about it on the outside, because Esmid pours out another droplet from a canteen into his cup out of pity. Black looked at it, looked up at Esmid, and then knocked the yellow fluid to the back of his throat all at once like it was water.
+</p>
+<p>
+    “It's not the end of the world, you know,” Esmid offers with an apologetic and comforting touch. The old woman didn't know exactly how to empathize with the boy. his problems seemed imaginary and thus unimportant, but she felt bad that he did at least.
+</p>
+<p>
+    “No, that'll come when the ceilings come crashing down with the next big frost. Do you know I trained for six years to split moisture? Six years of my life, and they expect me to distill all of the knowledge and experience in thirty arns?” Black threw his hands up onto the toprail of the separating cage and squeezed the metal tight, trying and making zero progress in twisting them in with mercurian grip. “I have places to go and important things to do with my life. I didn't come to underheap to be a teacher and a civil servant.”
+</p>
+<p>
+    “Im sort of a civil servant here, but with no pension to speak of. It's too much a shame for that, because I'd findt a right funny thing if I had a badge and all of what that is.” Esmid chuckles, almost to themselves. Black certainly showed it very little or very poorly if he found the statement constructive or amusing. Which did hurt Esmid’s feelings a bit, but she was used to it too, and the sting went away quick.
+</p>
+<p>
+    Black motioned for another drop, holding out his canteen. Yet Esmid was slow in actually dispensing it, what for knowing that Black had a bad habit of funny ideas like running a tab, instead of just sharing his labor credits and continuing on with the day. The droplet clung to the lip of the spigot as if it was conscious of his nature and resisting either the aiding or abetting of it. She watched his expression carefully because she loved to gossip about her customers, and people with important jobs like moisture collection or ambassador sponsorship, always
+</p>
+<p>
+    Had the best stories and gossips. “A-anyway; where are you off to after this?”
+</p>
+<p>
+    His reply had all the dispassionate affect of one who has nothing to do and no one to answer to but themselves; a morose: “Home, I suppose.” uttered in between the motions of lifting the glass and taking another sip that didn’t exist. Esmid nodded sagely, and was about to make some commiserating nothing-comment, when the entrance to the watering hole is repeatedly violated by the arrival of a couple dozen reclamation officers of varying status. The previously quiet establishment now overflowing with chatter from outside, and then of a dozen or so conversations all happening at once. some of them related to those occurring nearby and producing a horribly weird echo effect of multiple voices relaying essentially the same information out of time.
+</p>
+<p>
+    Black rolls his eyes and knocks back the last of the delicious imaginary poison. His vision spins outward with a sense of inertial nausea that shoots out from somewhere deep in his back. It keeps expanding outwards, and it harries his initial attempt to rise up out of his chair so that he wobbles pathetically in place. A quick glance over his shoulder to make sure no one noticed to care, and he is ready to leave.
+</p>
+<p>
+    Esmid said something that more or less amounted to a goodbye before addressing the next patron, but black was already well removed mentally from the space. Once he was removed physically as well, He saw no more reason to stay in the burg for the evening and begin making his way back to the four walls and ceiling in which he would typically reside during his off time, And he would be berating himself internally for at least a quarter of the walk having realized that he'd done it again and talked too much.
+</p>
+
+<hr>
+
+<!-- CHAPTER 2 -->
+<h2 id="ch2">2</h2>
+
+<p>
+    Excavating was what they used to call it. Now it’s material redistribution, and no one who works with anyone in material redistribution knows what they do… because to them, it sounds like a nothing job.” Black dragged the edge of his forearm length blade against the slimy underlayer of wood rot, peeling back chunks of the wall like it was a subcutaneous layer of living flesh.
+</p>
+<p>
+    Rōna nodded and gave an appropriately engaged grunt as she carefully crawled along the ledgeline of the cavern wall to follow him. Less than a microt of space was keeping her from an untimely and painful ending, and she deeply resented her coworker for how casually he seemed to have disregarded the precariousness of their path. She wanted to be safely crawling underneath the drooping walls of the right caverns where the moisture was squeezed out and collected with the dry rot, not wandering the huge moist caverns deep inside the bowels of old-oak.
+</p>
+<p>
+    “You do this every day?” She groaned, trying to take her mind elsewhere to improve her focus.
+</p>
+<p>
+    “Every other day, sure. Gives time for new layers of bacterial growth to develop and bring positive moisture down. That’s the only way you attract the good bacterial colonies that bring down the best spore types. It's more of a waiting game than it is a science, but it saves you time in collection later so you can focus on splitting technique.” He glances around on the wall flashing his ultraviolet wand in different places. Finally he spots what he was looking for: a spiral clustering of hyphae that didn’t look to have an origin point on the wall face. He cups and scoops his hand into the rot taking out a fist-sized chunk, and shows her the underside. A whole wet mess of mushy rotting wood caked with a thick fungus that split into slivers like gils when poked too forcefully, like the wood was the only thing keeping it stable. Rona reaches out to jab at it with an improvised scalpel, whose handle had been wrapped with something pink and decorative to amplify its function. When split, the fungus bled out a brownish liquid that smelled like the moisture they drank. The smell was the same but more earthy, and not the least bit appetizing for it. As more and more came out, and the air around them soured appreciatively, and Rona’s expression fermented in advanced-realtime.
+</p>
+<p>
+    Bartleby gave a knowing nod and continued down the trailmarkings as they lead out over a deeper cavern and they hovered over a dark fall that caught no light from their lantern. “I know that look.” She perked up immediately and tried to look nonplussed, offering a confused chortle. “You should get used to the smell pretty quickly, it doesn’t taste too bad either.”
+</p>
+<p>
+    “I believe that.” Rona muttered under her breath. She walked slowly and always with a hand to
+</p>
+<p>
+    the wall, though there was nothing to grab onto, and even with that little support she kept swaying as they went carefully from plank to plank. “Just like I believed the recruiters when they told me all the amazing health benefits of this line of employment, and how the quarters I’d be assigned would be so much bigger and warmer than the ones she was used to. She had believed it at the time, because she was desperate to have any more space than she was used to then, and it seemed worth the potential risks.
+</p>
+<p>
+    Buggaboy had felt that way too once. Not because his molts were uncomfortable experiences at the best of times, but for the fact that he’d had no home to speak of before coming to Thelog. His sympathies ended there, however, as he had no patience or time for anyone who wasn’t ready to work hard irregardless of their histories or motivations. What was the point of drive, of calling, if one did not answer it?
+</p>
+<p>
+    “What is the point of possessing a driving force, Rona? of having a calling that screams to you from your very bones, if you don’t answer it? I say that we throw ourselves into anything that has meaning and gives us purpose - and I get my purpose from… this!”
+</p>
+<p>
+    He thrusts his fist into the wall to their right, just the same as last time. though he seemed to pick a totally random and convenient spot to do so, when he pulls his hand back full of mulch a million beads of moisture begin to form and then create a steady trickle down the wall. He’d mean to show off, and if things hadn’t played out the way they did he might have been successful in doing so. But just as he had penetrated the mushy decomposing fibers of the wall with his fingers, there was a snapping and crumbling sound from somewhere much further ahead, and it was followed quickly bt the sound of a thudding fall, something else collapsing, one last distant echo of a fall reaching her ears. More startled by something she thought she heard, she ignores him the first time and strains her senses to extend outward as far as they would go. She tries to recall the memory fresh back to her mind’s eye, failing the first two times and then getting a vague sense of it’s easterly destination.
+</p>
+<p>
+    She returns her attention to Black while he is mid-sentence, cutting short his regaling her with his own philosophical musings on purpose and labor. “Did you hear that?” He turned and gave her a look that said, no, he had not.
+</p>
+<p>
+    Traversal was the least looked forward to part of doing jobs deep in the rotwood where there was so little light from the beamshafts reaching them, they had to move very slowly to allow their eyes to adjust to the darkness. Free-climbing in the dark was a scary thing; he had to test every foot or handhold dug into the rotting wall to make sure that the networks of mycelium holding the fibers together wouldn’t collapse around his weight. He bid Rona to stay on the last little sliver of the trail for him to climb up into the next chamber, but she insisted on following him. In case you get hurt and need help, she said, but he doubted if there would be help enough for either of them, whether the best or the worst befell them.
+</p>
+<p>
+    Or, if they fell down to the bottom.
+</p>
+
+<hr>
+
+<!-- Back to top link -->
+<div class="back-top-container">
+  <a href="#top">↑ Back to top</a>
+</div>
+
+<!-- Return link -->
+<div class="return-link">
+  <p><a href="../writing.html">back</a></p>
+</div>
+
+</body>
+</html>
