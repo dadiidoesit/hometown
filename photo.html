@@ -1,20 +1,316 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>photo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gallery</title>
+<style>
+  :root{
+    --bg:#0d0d0d;
+    --gap:6px;
+    --unit:110px;
+    --fade-ms:600ms;
+  }
+  @media (max-width:640px){ :root{ --unit:80px; } }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#eee;}
+
+  #collage{ display:grid; gap:var(--gap); padding:var(--gap); justify-content:center; }
+  #collage figure{
+    margin:0; position:relative; overflow:hidden; border-radius:4px; background:#111;
+    opacity:0; transform:scale(1.02);
+    animation: reveal var(--fade-ms) ease forwards;
+    animation-delay: calc(var(--i, 0) * 25ms);
+  }
+  @keyframes reveal{ to{ opacity:1; transform:scale(1); } }
+  #collage img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  #err{
+    position:fixed; bottom:0; left:0; right:0; padding:10px 16px;
+    background:#3a1414; color:#f3caca; font-size:13px; display:none;
+  }
+</style>
 </head>
 <body>
 
-<p>photo</p>
-<p><a href="index.html">index</a></p>
-<hr>
+<!-- Populated at load time from your GitHub repo's image folder — see
+     GITHUB_* config in the script below. Nothing to hand-edit here. -->
+<div id="collage"></div>
 
-<p>
-scan_022.jpg<br>
-03.26<br>
-<a href="photo/2026-03_scan_022.html" onclick="window.open(this.href,'_blank','width=900,height=700'); return false;"><img src="photo/img/2026-03_scan_022_thumb.jpg" width="250" height="100" alt=""></a>
-</p>
+<div id="err"></div>
+
+<script>
+/* ============================================================
+   CONFIG
+   ============================================================ */
+const COOKIE_NAME   = "galleryBeaconValue";
+const COOKIE_DAYS   = 3;
+const SAMPLE_SIZE   = 24;   // px, offscreen thumbnail for edge sampling
+const BIG_THRESHOLD = 40;   // out of 255 — chance an image is promoted to a "big" 2x2 block
+
+// Swap this proxy if it ever goes down — any service that mirrors a URL's
+// raw response body with an Access-Control-Allow-Origin header works.
+const BEACON_PROXY = "https://api.allorigins.win/raw?url=";
+const BEACON_URL   = "https://beacon.nist.gov/beacon/2.0/pulse/last";
+
+// Your repo's image folder. api.github.com sends proper CORS headers, so
+// the browser can list this folder directly — no manifest file needed.
+const GITHUB_OWNER  = "dadiidoesit";
+const GITHUB_REPO   = "hometown";
+const GITHUB_PATH   = "photo/img";
+const GITHUB_BRANCH = "main";
+const IMAGE_EXT_RE  = /\.(jpe?g|png|webp|avif|gif)$/i; // dng/raw files are skipped — browsers can't render them
+
+const SHAPES = {
+  sq:  { cols:1, rows:1 },
+  wide:{ cols:2, rows:1 },
+  tall:{ cols:1, rows:2 },
+  big: { cols:2, rows:2 },
+};
+// Fallback order when a shape doesn't fit the remaining space.
+const DOWNGRADE = { big:["wide","tall","sq"], wide:["sq"], tall:["sq"], sq:[] };
+
+/* ============================================================
+   COOKIE
+   ============================================================ */
+function getCookie(name){ const m=document.cookie.match(new RegExp('(?:^|; )'+name+'=([^;]*)')); return m?decodeURIComponent(m[1]):null; }
+function setCookie(name,value,days){ document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${days*86400}; path=/; SameSite=Lax`; }
+
+/* ============================================================
+   ENTROPY SOURCE — raw beacon bytes, consumed directly.
+   No PRNG algorithm expands them; we just read through the byte
+   string and wrap back to the start if a gallery is large enough
+   to need more draws than we have bytes (64 bytes / 512 bits from
+   one pulse). That repetition is the honest cost of not running a
+   generator.
+   ============================================================ */
+function hexToBytes(hex){
+  const out = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < out.length; i++) out[i] = parseInt(hex.substr(i*2, 2), 16);
+  return out;
+}
+function makeByteStream(bytes){
+  let cursor = 0;
+  return {
+    nextByte(){ const b = bytes[cursor % bytes.length]; cursor++; return b; },
+    nextInt(maxExclusive){ return this.nextByte() % maxExclusive; }, // small modulo bias, acceptable here
+    nextFloat(){ return this.nextByte() / 255; },
+  };
+}
+
+async function getEntropyHex(){
+  const cached = getCookie(COOKIE_NAME);
+  if (cached && /^[0-9a-fA-F]+$/.test(cached)) {
+    setCookie(COOKIE_NAME, cached, COOKIE_DAYS); // refresh expiry
+    return cached;
+  }
+  try {
+    const res = await fetch(BEACON_PROXY + encodeURIComponent(BEACON_URL));
+    if (!res.ok) throw new Error("proxy HTTP " + res.status);
+    const data = await res.json();
+    const hex = data.pulse.outputValue;
+    if (!hex) throw new Error("no outputValue in beacon response");
+    setCookie(COOKIE_NAME, hex, COOKIE_DAYS);
+    return hex;
+  } catch (e) {
+    // Beacon/proxy unreachable — fall back to the browser's own CSPRNG
+    // just so the page still renders. Not the beacon, and not a
+    // hand-rolled generator either.
+    document.getElementById("err").style.display = "block";
+    document.getElementById("err").textContent = "Couldn't reach the randomness beacon — using local randomness instead.";
+    const buf = new Uint8Array(64);
+    crypto.getRandomValues(buf);
+    const hex = Array.from(buf).map(b => b.toString(16).padStart(2,"0")).join("");
+    setCookie(COOKIE_NAME, hex, COOKIE_DAYS);
+    return hex;
+  }
+}
+
+/* ============================================================
+   GITHUB FOLDER LISTING
+   Uses the repo Contents API (CORS-enabled) instead of a manifest
+   file or server directory listing. Unauthenticated requests are
+   capped at 60/hour per IP by GitHub — fine for a personal gallery,
+   but worth knowing if traffic ever gets heavy from one shared IP.
+   ============================================================ */
+async function fetchRepoImages(){
+  const url = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${GITHUB_PATH}?ref=${GITHUB_BRANCH}`;
+  const res = await fetch(url, { headers: { "Accept": "application/vnd.github+json" } });
+  if (!res.ok) throw new Error("GitHub API HTTP " + res.status);
+  const list = await res.json();
+  if (!Array.isArray(list)) throw new Error("Unexpected GitHub API response (check owner/repo/path)");
+  return list
+    .filter(item => item.type === "file" && IMAGE_EXT_RE.test(item.name))
+    .map(item => ({ name: item.name, src: item.download_url }));
+}
+
+function buildFigures(collage, images){
+  const frag = document.createDocumentFragment();
+  const figures = [];
+  images.forEach(({ name, src }) => {
+    const fig = document.createElement("figure");
+    const img = document.createElement("img");
+    img.className = "gallery-img";
+    img.crossOrigin = "anonymous"; // raw.githubusercontent.com sends CORS headers, so edge sampling works
+    img.loading = "lazy";
+    img.alt = name;
+    img.src = src;
+    fig.appendChild(img);
+    frag.appendChild(fig);
+    figures.push(fig);
+  });
+  collage.appendChild(frag);
+  return figures;
+}
+
+/* ============================================================
+   EDGE COLOR SAMPLING (unchanged approach)
+   ============================================================ */
+function computeEdgeSignature(img){
+  const c=document.createElement("canvas"); c.width=SAMPLE_SIZE; c.height=SAMPLE_SIZE;
+  const ctx=c.getContext("2d",{willReadFrequently:true});
+  ctx.drawImage(img,0,0,SAMPLE_SIZE,SAMPLE_SIZE);
+  let data;
+  try{ data=ctx.getImageData(0,0,SAMPLE_SIZE,SAMPLE_SIZE).data; }
+  catch(e){ const g=[128,128,128]; return {left:g,right:g,top:g,bottom:g}; }
+  const px=(x,y)=>{ const i=(y*SAMPLE_SIZE+x)*4; return [data[i],data[i+1],data[i+2]]; };
+  const avg=pts=>pts.reduce((s,[x,y])=>{const c=px(x,y);return [s[0]+c[0],s[1]+c[1],s[2]+c[2]];},[0,0,0]).map(v=>v/pts.length);
+  const col=x=>Array.from({length:SAMPLE_SIZE},(_,y)=>[x,y]);
+  const row=y=>Array.from({length:SAMPLE_SIZE},(_,x)=>[x,y]);
+  return { left:avg(col(0)), right:avg(col(SAMPLE_SIZE-1)), top:avg(row(0)), bottom:avg(row(SAMPLE_SIZE-1)) };
+}
+function colorDist(a,b){ const dr=a[0]-b[0],dg=a[1]-b[1],db=a[2]-b[2]; return Math.sqrt(dr*dr+dg*dg+db*db); }
+function invert(c){ return [255-c[0],255-c[1],255-c[2]]; }
+const MAX_DIST = colorDist([0,0,0],[255,255,255]);
+function edgeAffinity(a,b){ return Math.max(1-colorDist(a,b)/MAX_DIST, 1-colorDist(a,invert(b))/MAX_DIST); }
+
+/* ============================================================
+   SHAPE PREFERENCE — real aspect ratio + beacon-driven "big" roll
+   ============================================================ */
+function preferredShape(img, stream){
+  if (stream.nextByte() < BIG_THRESHOLD) return "big";
+  const ratio = img.naturalWidth / img.naturalHeight;
+  if (ratio > 1.35) return "wide";
+  if (ratio < 0.75) return "tall";
+  return "sq";
+}
+
+/* ============================================================
+   GUARANTEED-ADJACENCY BIN PACKING
+   Explicitly assigns each tile a grid-column/grid-row start, so
+   every touching pair in the final layout was actually chosen for
+   edge affinity — not left to the browser's auto-placement.
+   ============================================================ */
+function packGrid(items, cols, stream){
+  const occ = [];                       // occ[r][c] -> placed item or null
+  function ensureRow(r){ while (occ.length <= r) occ.push(new Array(cols).fill(null)); }
+  function fits(r, c, w, h){
+    if (c + w > cols) return false;
+    ensureRow(r + h - 1);
+    for (let dr = 0; dr < h; dr++)
+      for (let dc = 0; dc < w; dc++)
+        if (occ[r+dr][c+dc]) return false;
+    return true;
+  }
+  function place(item, r, c, w, h){
+    for (let dr = 0; dr < h; dr++)
+      for (let dc = 0; dc < w; dc++)
+        occ[r+dr][c+dc] = item;
+    item.placement = { r, c, w, h };
+  }
+
+  const pool = items.slice();
+  let r = 0, c = 0;
+  let order = 0;
+
+  while (pool.length) {
+    ensureRow(r);
+    if (occ[r][c]) {
+      c++; if (c >= cols) { c = 0; r++; }
+      continue;
+    }
+    const left = c > 0 ? occ[r][c-1] : null;
+    const top  = r > 0 ? occ[r-1][c] : null;
+
+    let bestIdx = -1, bestShape = null, bestScore = -Infinity;
+    for (let i = 0; i < pool.length; i++) {
+      const cand = pool[i];
+      const tryShapes = [cand.shape, ...DOWNGRADE[cand.shape]];
+      for (const shapeName of tryShapes) {
+        const { cols:w, rows:h } = SHAPES[shapeName];
+        if (!fits(r, c, w, h)) continue;
+        let score, factors = 0, sum = 0;
+        if (left) { sum += edgeAffinity(left.sig.right, cand.sig.left); factors++; }
+        if (top)  { sum += edgeAffinity(top.sig.bottom, cand.sig.top); factors++; }
+        score = factors ? sum / factors : stream.nextFloat(); // no placed neighbors yet: beacon picks the opener
+        score += stream.nextFloat() * 0.0001; // beacon-driven tie-break
+        if (score > bestScore) { bestScore = score; bestIdx = i; bestShape = shapeName; }
+        break; // first fitting shape variant for this candidate is enough to score it
+      }
+    }
+
+    if (bestIdx === -1) { // nothing fits here at all (shouldn't happen since sq is 1x1) — advance
+      c++; if (c >= cols) { c = 0; r++; }
+      continue;
+    }
+    const chosen = pool.splice(bestIdx, 1)[0];
+    const { cols:w, rows:h } = SHAPES[bestShape];
+    place(chosen, r, c, w, h);
+    chosen.fig.classList.add(bestShape);
+    chosen.fig.style.gridColumn = `${c+1} / span ${w}`;
+    chosen.fig.style.gridRow = `${r+1} / span ${h}`;
+    chosen.fig.style.setProperty("--i", order++);
+
+    c++; if (c >= cols) { c = 0; r++; }
+  }
+  return occ.length; // total rows used
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+async function main(){
+  const collage = document.getElementById("collage");
+  const errEl = document.getElementById("err");
+
+  let images;
+  try {
+    images = await fetchRepoImages();
+  } catch (e) {
+    errEl.style.display = "block";
+    errEl.textContent = "Couldn't list images from GitHub — check GITHUB_OWNER/REPO/PATH in the script.";
+    return;
+  }
+  if (images.length === 0) return;
+
+  const figures = buildFigures(collage, images);
+
+  await Promise.all(figures.map(fig => {
+    const img = fig.querySelector("img");
+    return img.complete ? Promise.resolve() : new Promise(res => { img.onload = img.onerror = res; });
+  }));
+
+  const hex = await getEntropyHex();
+  const stream = makeByteStream(hexToBytes(hex));
+
+  const items = figures.map(fig => {
+    const img = fig.querySelector("img");
+    let sig;
+    try { sig = computeEdgeSignature(img); }
+    catch(e){ sig = {left:[128,128,128],right:[128,128,128],top:[128,128,128],bottom:[128,128,128]}; }
+    return { fig, sig, shape: preferredShape(img, stream) };
+  });
+
+  const cols = Math.max(1, Math.floor(window.innerWidth / parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--unit"))));
+  const unit = getComputedStyle(document.documentElement).getPropertyValue("--unit").trim();
+  collage.style.gridTemplateColumns = `repeat(${cols}, ${unit})`;
+  collage.style.gridAutoRows = unit;
+
+  packGrid(items, cols, stream); // sets --i per item, which drives the CSS fade-in delay
+}
+
+main();
+</script>
 </body>
 </html>
