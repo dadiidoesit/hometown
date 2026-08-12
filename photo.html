@@ -24,6 +24,7 @@
     animation-delay: calc(var(--i, 0) * 25ms);
   }
   @keyframes reveal{ to{ opacity:1; transform:scale(1); } }
+  #collage a{ display:block; width:100%; height:100%; }
   #collage img{ width:100%; height:100%; object-fit:cover; display:block; }
 
   #err{
@@ -150,13 +151,22 @@ function buildFigures(collage, images){
   const figures = [];
   images.forEach(({ name, src }) => {
     const fig = document.createElement("figure");
+    // Thumbnails ARE the full-size file, just cropped down visually — so
+    // "view full size" is just a plain link to the same URL, opened in a
+    // new tab. No overlay markup, no JS click handler, nothing to tear
+    // down afterward. Lowest possible resource cost for this feature.
+    const link = document.createElement("a");
+    link.href = src;
+    link.target = "_blank";
+    link.rel = "noopener";
     const img = document.createElement("img");
     img.className = "gallery-img";
     img.crossOrigin = "anonymous"; // raw.githubusercontent.com sends CORS headers, so edge sampling works
     img.loading = "lazy";
     img.alt = name;
     img.src = src;
-    fig.appendChild(img);
+    link.appendChild(img);
+    fig.appendChild(link);
     frag.appendChild(fig);
     figures.push(fig);
   });
