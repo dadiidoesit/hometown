@@ -1,69 +1,400 @@
 <!doctype html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>music</title>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>music - audio report</title>
+<style>dialog{max-width:min(560px,90vw);max-height:85vh;overflow:auto}dialog img{max-width:100%;height:auto}audio{max-width:100%}summary,button{cursor:pointer}</style>
+<style id="hometown-music-style">
+/* Black release masthead / white living tracklist. Site-wide styles untouched. */
+.hm-release{margin:18px 0 32px clamp(12px,4vw,58px);max-width:780px;font:14px/1.45 Arial,sans-serif;color:#111}
+.hm-identity{display:flex;align-items:flex-start;gap:16px;background:#101010;color:#fff;padding:17px 19px;border-bottom:5px solid #aaa}
+.hm-identity h3{font:bold 21px Georgia,serif;letter-spacing:.01em;margin:0 0 5px;color:#fff}
+.hm-identity small{font:11px 'Courier New',monospace;color:#ccc}
+.hm-cover{flex:none;width:90px;max-height:110px;object-fit:cover;border:1px solid #aaa}
+.hm-identity button{border:0;background:transparent;padding:0;cursor:pointer}
+.hm-identity .hm-header-note{font:12px 'Courier New',monospace;color:#ddd;margin-top:8px}
+.hm-trackboard{margin-left:clamp(14px,3vw,48px);background:#fff;color:#111;padding:13px 17px 10px;border:1px solid #aaa;border-top:0;max-width:710px}
+.hm-boardtop{border-bottom:1px solid #aaa;font:10px 'Courier New',monospace;letter-spacing:.1em;padding-bottom:8px;margin-bottom:5px;color:#555}
+.hm-track{padding:13px 0;border-bottom:1px solid #ddd}.hm-track:last-child{border-bottom:0}
+.hm-track .name{font:bold 14px Arial,sans-serif;overflow-wrap:anywhere}
+.hm-track-number{display:inline-block;min-width:2.7em;color:#777;font:12px 'Courier New',monospace}
+.hm-track .hm-note{font:italic 12px Georgia,serif;color:#666;margin:3px 0 7px;white-space:pre-wrap}
+.hm-track .hm-recording-label{font:10px Courier New,monospace;color:#555;margin:4px 0}.hm-track .hm-recording-label b{border:1px solid #999;padding:2px 5px}.hm-track .hm-keywords{font:10px Courier New,monospace;color:#777;margin:4px 0}
+.hm-audio{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:6px}
+.hm-audio audio{height:30px;max-width:100%;width:245px;filter:grayscale(1)}
+/* Native HTML popover: outside click and Esc dismiss automatically; no lyrics JavaScript. */
+.hm-lyrics-trigger{background:#ffcf24;color:#111;border:1px solid #111;padding:3px 9px;font:12px 'Courier New',monospace;cursor:pointer}
+.hm-lyrics-popover{position:fixed;inset:0;margin:auto;width:min(1060px,96vw);height:min(790px,93dvh);max-width:96vw;max-height:93dvh;flex-direction:column;padding:0;border:3px solid #ffcf24;background:#111;color:#fff;box-shadow:0 18px 55px #0009}
+.hm-lyrics-popover:popover-open{display:flex}
+.hm-lyrics-popover::backdrop{background:rgba(0,0,0,.75)}
+.hm-lyrics-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;background:#ffcf24;color:#111;padding:7px 12px;font:12px 'Courier New',monospace}
+.hm-lyrics-bar a{color:#111;text-decoration:underline}.hm-lyrics-bar button{font:12px 'Courier New',monospace;border:1px solid #111;background:#111;color:#ffcf24;cursor:pointer;padding:4px 10px}
+.hm-lyrics-popover iframe{width:100%;flex:1;min-height:0;border:0;display:block;background:#111}
+.hm-audio a{color:#0000ee}.hm-details{margin:8px 0 0 15px;font:12px 'Courier New',monospace}
+.hm-details button{background:#eee;border:1px solid #111;font:12px 'Courier New',monospace;margin-right:5px;padding:3px 8px;cursor:pointer}
+.hm-release dialog{border:2px solid #333;padding:17px;background:#f5f5f2;color:#111;max-width:min(630px,90vw);max-height:85vh}
+.hm-release dialog::backdrop{background:rgba(0,0,0,.75)}.hm-release dialog img{max-width:80vw;max-height:65vh;height:auto}
+.hm-empty{font:12px 'Courier New',monospace;color:#666}
+@media(max-width:540px){.hm-release{margin-left:8px}.hm-cover{width:70px}.hm-trackboard{margin-left:6px;padding:12px}.hm-identity{padding:12px}}
+
+</style>
 </head>
 <body>
-
-<p>music</p>
-<p><a href="index.html">index</a></p>
+<p><span style="font-family:Courier New,monospace"><b><u>AUDIO &amp; MUSIC</u></b></span></p>
+<p><a href="index.html">index</a> // <a href="#albums">albums</a> // <a href="#singles">individual recordings</a> // <a href="music/whydontwestopandtalkitover/index.html">lyrical annotation archive</a></p>
 <hr>
+<p id="albums"><strong>ALBUMS &amp; COLLECTIONS</strong><br><small>01 // FULL-LENGTH RECORDS</small></p>
+<!-- HOMETOWN:ALBUMS:START -->
+<article class="hm-release" id="hm-idmv4z63thrp5e0ytu"><div class="hm-identity"><button type="button" onclick="document.getElementById('hm-idmv4z63thrp5e0ytu-cover').showModal()" title="view album cover"><img class="hm-cover" loading="lazy" src="music/covers/16flz.jpg" alt="Cover of music that was made"></button><div><h3>music that was made</h3><small>LONG PLAY / ALBUM // START 10.11.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">MUSIC THAT WAS MADE &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name"><span class="hm-track-number">01</span>modestly waiting demurely for orders</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/modestly waiting demurely for orders v1-001.mp3"></audio> <a href="music/audio/music-that-was-made/modestly waiting demurely for orders v1-001.mp3" download>download</a> <button type="button" class="hm-lyrics-trigger" popovertarget="hm-idmv4z63thrp5e0ytu-lyrics-0">lyrics ↗</button></div><div id="hm-idmv4z63thrp5e0ytu-lyrics-0" class="hm-lyrics-popover" popover="auto" aria-label="Lyrics and annotations for modestly waiting demurely for orders"><div class="hm-lyrics-bar"><strong>WHY DON'T WE STOP AND TALK IT OVER</strong><a href="music/whydontwestopandtalkitover/index.html#song-modesto" target="_blank" rel="noopener noreferrer">OPEN FULL PAGE ↗</a><button type="button" popovertarget="hm-idmv4z63thrp5e0ytu-lyrics-0" popovertargetaction="hide">CLOSE [X]</button></div><iframe loading="lazy" title="Lyrics and annotations for modestly waiting demurely for orders" src="music/whydontwestopandtalkitover/index.html#song-modesto"></iframe></div></div>
+<div class="hm-track"><div class="name"><span class="hm-track-number">04</span>made in color</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/04-made-in-color.mp3"></audio> <a href="music/audio/music-that-was-made/04-made-in-color.mp3" download>download</a></div></div>
+<div class="hm-track"><div class="name"><span class="hm-track-number">07</span>DVI</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/07-dvi.mp3"></audio> <a href="music/audio/music-that-was-made/07-dvi.mp3" download>download</a></div></div>
+<div class="hm-track"><div class="name"><span class="hm-track-number">10</span>big screen disney princess</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-keywords">TAGS / disney pop</div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/10 - big screen disney princess - dadii.mp3"></audio> <a href="music/audio/music-that-was-made/10 - big screen disney princess - dadii.mp3" download>download</a></div></div></div><div class="hm-details"><button type="button" onclick="document.getElementById('hm-idmv4z63thrp5e0ytu-liner').showModal()">[ liner notes ]</button></div><dialog id="hm-idmv4z63thrp5e0ytu-cover"><form method="dialog"><button>close [x]</button></form><p><img src="music/covers/16flz.jpg" alt="Cover of music that was made"></p></dialog><dialog id="hm-idmv4z63thrp5e0ytu-liner"><form method="dialog"><button>close [x]</button></form><p><b>LINER NOTES / music that was made</b></p><p style="white-space:pre-wrap">tbd</p></dialog></article>
+<article class="hm-release" id="hm-idmv752d26e1m3zv0v"><div class="hm-identity"><button type="button" onclick="document.getElementById('hm-idmv752d26e1m3zv0v-cover').showModal()" title="view album cover"><img class="hm-cover" loading="lazy" src="music/covers/Music That Was Made in Murky Waters.png" alt="Cover of music that was made (32 fl oz)"></button><div><h3>music that was made (32 fl oz)</h3><small>LONG PLAY / ALBUM // START 2023</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">MUSIC THAT WAS MADE (32 FL OZ) &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name"><span class="hm-track-number">1</span>i am disgusting(ly beautiful, charming and smart)</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made-32-fl-oz/1 - i am disgusting(ly beautiful, charming and smart) - dadii.mp3"></audio> <a href="music/audio/music-that-was-made-32-fl-oz/1 - i am disgusting(ly beautiful, charming and smart) - dadii.mp3" download>download</a> <button type="button" class="hm-lyrics-trigger" popovertarget="hm-idmv752d26e1m3zv0v-lyrics-0">lyrics ↗</button></div><div id="hm-idmv752d26e1m3zv0v-lyrics-0" class="hm-lyrics-popover" popover="auto" aria-label="Lyrics and annotations for i am disgusting(ly beautiful, charming and smart)"><div class="hm-lyrics-bar"><strong>WHY DON'T WE STOP AND TALK IT OVER</strong><a href="music/whydontwestopandtalkitover/index.html#song-i-am-disgusting-ly-beautiful-charming-and-smart" target="_blank" rel="noopener noreferrer">OPEN FULL PAGE ↗</a><button type="button" popovertarget="hm-idmv752d26e1m3zv0v-lyrics-0" popovertargetaction="hide">CLOSE [X]</button></div><iframe loading="lazy" title="Lyrics and annotations for i am disgusting(ly beautiful, charming and smart)" src="music/whydontwestopandtalkitover/index.html#song-i-am-disgusting-ly-beautiful-charming-and-smart"></iframe></div></div></div><div class="hm-details"><button type="button" onclick="document.getElementById('hm-idmv752d26e1m3zv0v-liner').showModal()">[ liner notes ]</button></div><dialog id="hm-idmv752d26e1m3zv0v-cover"><form method="dialog"><button>close [x]</button></form><p><img src="music/covers/Music That Was Made in Murky Waters.png" alt="Cover of music that was made (32 fl oz)"></p></dialog><dialog id="hm-idmv752d26e1m3zv0v-liner"><form method="dialog"><button>close [x]</button></form><p><b>LINER NOTES / music that was made (32 fl oz)</b></p><p style="white-space:pre-wrap">32 fl oz</p></dialog></article>
+<article class="hm-release" id="hm-idmv7625sj8ih3gmpa"><div class="hm-identity"><button type="button" onclick="document.getElementById('hm-idmv7625sj8ih3gmpa-cover').showModal()" title="view album cover"><img class="hm-cover" loading="lazy" src="music/covers/Retro VHS Shelf with Amber Bottle.png" alt="Cover of music that was made"></button><div><h3>music that was made</h3><small>LONG PLAY / ALBUM // START 2025</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">MUSIC THAT WAS MADE &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name"><span class="hm-track-number">1</span>40minutes</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-keywords">TAGS / DNB, JUNGLEPUNK</div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/1 - 40minutes - dadii.mp3"></audio> <a href="music/audio/music-that-was-made/1 - 40minutes - dadii.mp3" download>download</a></div></div>
+<div class="hm-track"><div class="name"><span class="hm-track-number">3</span>sory syzy</div><div class="hm-recording-label"><b>ALBUM VERSION</b></div><div class="hm-keywords">TAGS / apology rock</div><div class="hm-audio"><audio controls preload="none" src="music/audio/music-that-was-made/3 - sory syzy - dadii.mp3"></audio> <a href="music/audio/music-that-was-made/3 - sory syzy - dadii.mp3" download>download</a> <button type="button" class="hm-lyrics-trigger" popovertarget="hm-idmv7625sj8ih3gmpa-lyrics-1">lyrics ↗</button></div><div id="hm-idmv7625sj8ih3gmpa-lyrics-1" class="hm-lyrics-popover" popover="auto" aria-label="Lyrics and annotations for sory syzy"><div class="hm-lyrics-bar"><strong>WHY DON'T WE STOP AND TALK IT OVER</strong><a href="music/whydontwestopandtalkitover/index.html#song-sory-syzy" target="_blank" rel="noopener noreferrer">OPEN FULL PAGE ↗</a><button type="button" popovertarget="hm-idmv7625sj8ih3gmpa-lyrics-1" popovertargetaction="hide">CLOSE [X]</button></div><iframe loading="lazy" title="Lyrics and annotations for sory syzy" src="music/whydontwestopandtalkitover/index.html#song-sory-syzy"></iframe></div></div></div><div class="hm-details"></div><dialog id="hm-idmv7625sj8ih3gmpa-cover"><form method="dialog"><button>close [x]</button></form><p><img src="music/covers/Retro VHS Shelf with Amber Bottle.png" alt="Cover of music that was made"></p></dialog></article>
+<!-- HOMETOWN:ALBUMS:END -->
+<!-- Album example: cover thumbnail may use <button type="button" onclick="document.getElementById('cover-001').showModal()"><img src="music/covers/example.jpg" alt="album cover" width="96"></button> ; provide <dialog id="cover-001"><button onclick="this.closest('dialog').close()">close</button><p><img src="music/covers/example.jpg" alt="album cover"></p></dialog>. Similar markup works for liner notes; include a link to the full-sized liner-note image. -->
+<hr><hr>
+<p id="singles"><strong>INDIVIDUAL RECORDINGS</strong><br><small>02 // SINGLES, SKETCHES &amp; OTHER MATERIAL</small></p>
+<!-- HOMETOWN:SINGLES:START -->
+<article class="hm-release" id="hm-idmv4yhph8ivg6fk66"><div class="hm-identity"><div><h3>sister, im a snitcher</h3><small>SINGLE / RECORDING // FINISH 08.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">SISTER, IM A SNITCHER &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">sister, im a snitcher</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-08_sister_im_a_snitcher.mp3"></audio> <a href="music/audio/2026-08_sister_im_a_snitcher.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph83jtscej9"><div class="hm-identity"><div><h3>HIDDENGRAINCONSORTIUM</h3><small>SINGLE / RECORDING // FINISH 08.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">HIDDENGRAINCONSORTIUM &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">HIDDENGRAINCONSORTIUM</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-08_hiddengrainconsortium.mp3"></audio> <a href="music/audio/2026-08_hiddengrainconsortium.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph8bndaa84c"><div class="hm-identity"><div><h3>i am disgusting(ly beautiful)</h3><small>SINGLE / RECORDING // FINISH 07.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">I AM DISGUSTING(LY BEAUTIFUL) &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">i am disgusting(ly beautiful)</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-07_i_am_disgustingly_beautiful.mp3"></audio> <a href="music/audio/2026-07_i_am_disgustingly_beautiful.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph8kjclybba"><div class="hm-identity"><div><h3>domestic violence intervention</h3><small>SINGLE / RECORDING // FINISH 07.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">DOMESTIC VIOLENCE INTERVENTION &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">domestic violence intervention</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-07_domestic_violence_intervention.mp3"></audio> <a href="music/audio/2026-07_domestic_violence_intervention.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph8wzgfu8y0"><div class="hm-identity"><div><h3>spooky jack</h3><small>SINGLE / RECORDING // FINISH 05.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">SPOOKY JACK &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">spooky jack</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-05_spooky_jack.mp3"></audio> <a href="music/audio/2026-05_spooky_jack.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph8hopnp2fw"><div class="hm-identity"><div><h3>loop_06.mp3</h3><small>SINGLE / RECORDING // FINISH 01.26</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">LOOP_06.MP3 &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><div class="name">loop_06.mp3</div><div class="hm-audio"><audio controls preload="none" src="music/audio/2026-01_loop_06.mp3"></audio> <a href="music/audio/2026-01_loop_06.mp3" download>download</a></div></div></div><div class="hm-details"></div></article>
+<article class="hm-release" id="hm-idmv4yhph88h7i5njc"><div class="hm-identity"><div><h3>sketch_b.mp3</h3><small>SINGLE / RECORDING // FINISH 09.23</small></div></div><div class="hm-trackboard"><div class="hm-boardtop">SKETCH_B.MP3 &nbsp; / &nbsp; CONTENTS SUBJECT TO CHANGE</div><div class="hm-track"><span class="hm-empty">NO AUDIO ON FILE</span></div></div><div class="hm-details"></div></article>
+<!-- HOMETOWN:SINGLES:END -->
+<hr><center><small>END OF REPORT // FILES MAY BE REVISED WITHOUT NOTICE</small></center>
 
-<p>
-sister, im a snitcher<br>
-08.26<br>
-<audio controls src="music/audio/2026-08_sister_im_a_snitcher.mp3"></audio><br>
-<a href="music/audio/2026-08_sister_im_a_snitcher.mp3" download>download</a>
-</p>
+<script id="hometown-music-database" type="application/json">
+{
+  "version": 3,
+  "releases": [
+    {
+      "id": "idmv4yhph8ivg6fk66",
+      "type": "single",
+      "title": "sister, im a snitcher",
+      "start": "",
+      "end": "08.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph8347k33sm",
+          "title": "sister, im a snitcher",
+          "audio": "music/audio/2026-08_sister_im_a_snitcher.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph83jtscej9",
+      "type": "single",
+      "title": "HIDDENGRAINCONSORTIUM",
+      "start": "",
+      "end": "08.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph89pb85gsi",
+          "title": "HIDDENGRAINCONSORTIUM",
+          "audio": "music/audio/2026-08_hiddengrainconsortium.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph8bndaa84c",
+      "type": "single",
+      "title": "i am disgusting(ly beautiful)",
+      "start": "",
+      "end": "07.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph80q8dmjbj",
+          "title": "i am disgusting(ly beautiful)",
+          "audio": "music/audio/2026-07_i_am_disgustingly_beautiful.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph8kjclybba",
+      "type": "single",
+      "title": "domestic violence intervention",
+      "start": "",
+      "end": "07.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph8z5mmatwt",
+          "title": "domestic violence intervention",
+          "audio": "music/audio/2026-07_domestic_violence_intervention.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph8wzgfu8y0",
+      "type": "single",
+      "title": "spooky jack",
+      "start": "",
+      "end": "05.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph8eg6sgt02",
+          "title": "spooky jack",
+          "audio": "music/audio/2026-05_spooky_jack.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph8hopnp2fw",
+      "type": "single",
+      "title": "loop_06.mp3",
+      "start": "",
+      "end": "01.26",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4yhph8cmfvm3ek",
+          "title": "loop_06.mp3",
+          "audio": "music/audio/2026-01_loop_06.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "",
+          "recordingVersion": "",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv4yhph88h7i5njc",
+      "type": "single",
+      "title": "sketch_b.mp3",
+      "start": "",
+      "end": "09.23",
+      "folder": "",
+      "cover": "",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": false,
+      "revision": "",
+      "related": "",
+      "tracks": []
+    },
+    {
+      "id": "idmv4z63thrp5e0ytu",
+      "type": "album",
+      "title": "music that was made",
+      "start": "10.11.26",
+      "end": "",
+      "folder": "music/audio/music-that-was-made",
+      "cover": "music/covers/16flz.jpg",
+      "linerimg": "",
+      "liner": "tbd",
+      "zip": "",
+      "showNumbers": true,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv4z4ixbeq96dtjt",
+          "title": "modestly waiting demurely for orders",
+          "audio": "music/audio/music-that-was-made/modestly waiting demurely for orders v1-001.mp3",
+          "lyrics": "music/whydontwestopandtalkitover/index.html#song-modesto",
+          "note": "",
+          "number": "",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        },
+        {
+          "id": "idmv73h3lxbzpieem1",
+          "title": "made in color",
+          "audio": "music/audio/music-that-was-made/04-made-in-color.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "04",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        },
+        {
+          "id": "idmv73ie6zn5ajb2yt",
+          "title": "DVI",
+          "audio": "music/audio/music-that-was-made/07-dvi.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "07",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        },
+        {
+          "id": "idmv74vdvxoyyy2a96",
+          "title": "big screen disney princess",
+          "audio": "music/audio/music-that-was-made/10 - big screen disney princess - dadii.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "10",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "disney pop",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv752d26e1m3zv0v",
+      "type": "album",
+      "title": "music that was made (32 fl oz)",
+      "start": "2023",
+      "end": "",
+      "folder": "music/audio/music-that-was-made-32-fl-oz",
+      "cover": "music/covers/Music That Was Made in Murky Waters.png",
+      "linerimg": "",
+      "liner": "32 fl oz",
+      "zip": "",
+      "showNumbers": true,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv7529v3vjnbi20v",
+          "title": "i am disgusting(ly beautiful, charming and smart)",
+          "audio": "music/audio/music-that-was-made-32-fl-oz/1 - i am disgusting(ly beautiful, charming and smart) - dadii.mp3",
+          "lyrics": "music/whydontwestopandtalkitover/index.html#song-i-am-disgusting-ly-beautiful-charming-and-smart",
+          "note": "",
+          "number": "1",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "",
+          "versions": []
+        }
+      ]
+    },
+    {
+      "id": "idmv7625sj8ih3gmpa",
+      "type": "album",
+      "title": "music that was made",
+      "start": "2025",
+      "end": "",
+      "folder": "music/audio/music-that-was-made",
+      "cover": "music/covers/Retro VHS Shelf with Amber Bottle.png",
+      "linerimg": "",
+      "liner": "",
+      "zip": "",
+      "showNumbers": true,
+      "revision": "",
+      "related": "",
+      "tracks": [
+        {
+          "id": "idmv7652x47s7hxk2o",
+          "title": "40minutes",
+          "audio": "music/audio/music-that-was-made/1 - 40minutes - dadii.mp3",
+          "lyrics": "",
+          "note": "",
+          "number": "1",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "DNB, JUNGLEPUNK",
+          "versions": []
+        },
+        {
+          "id": "idmv76bszalfls65qx",
+          "title": "sory syzy",
+          "audio": "music/audio/music-that-was-made/3 - sory syzy - dadii.mp3",
+          "lyrics": "music/whydontwestopandtalkitover/index.html#song-sory-syzy",
+          "note": "",
+          "number": "3",
+          "recordingVersion": "Album Version",
+          "featuring": "",
+          "tags": "apology rock",
+          "versions": []
+        }
+      ]
+    }
+  ]
+}
+</script>
 
-<p>
-HIDDENGRAINCONSORTIUM<br>
-08.26<br>
-<audio controls src="music/audio/2026-08_hiddengrainconsortium.mp3"></audio><br>
-<a href="music/audio/2026-08_hiddengrainconsortium.mp3" download>download</a>
-</p>
-
-<p>
-i am disgusting(ly beautiful)<br>
-07.26<br>
-<audio controls src="music/audio/2026-07_i_am_disgustingly_beautiful.mp3"></audio><br>
-<a href="music/audio/2026-07_i_am_disgustingly_beautiful.mp3" download>download</a>
-</p>
-
-<p>
-domestic violence intervention<br>
-07.26<br>
-<audio controls src="music/audio/2026-07_domestic_violence_intervention.mp3"></audio><br>
-<a href="music/audio/2026-07_domestic_violence_intervention.mp3" download>download</a>
-</p>
-
-<p>
-spooky jack<br>
-05.26<br>
-<audio controls src="music/audio/2026-05_spooky_jack.mp3"></audio><br>
-<a href="music/audio/2026-05_spooky_jack.mp3" download>download</a>
-</p>
-
-<p>
-<b>Album Name</b><br>
-<audio controls src="music/audio/album-name/track-01.mp3"></audio> track-01.mp3<br>
-<audio controls src="music/audio/album-name/track-02.mp3"></audio> track-02.mp3<br>
-<a href="music/audio/album-name/album-name.zip" download>Download Full Album</a>
-</p>
-
-<p>
-loop_06.mp3<br>
-01.26<br>
-<audio controls src="music/audio/2026-01_loop_06.mp3"></audio><br>
-<a href="music/audio/2026-01_loop_06.mp3" download>download</a>
-</p>
-
-<p>
-sketch_b.mp3<br>
-09.23<br>
-full unavailable.
-</p>
-</body>
-</html>
+</body></html>
